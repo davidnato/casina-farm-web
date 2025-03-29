@@ -26,7 +26,7 @@ const About = () => {
           <div className="order-1 md:order-2 flex justify-center">
             <div className="relative h-80 w-full md:h-96 md:w-80 overflow-hidden rounded-lg shadow-xl">
               <img 
-                src="https://github.com/davidnato/Casina-Farm/blob/main/pic/h1-slide1.jpg" 
+                src="https://images.unsplash.com/photo-1473973266408-ed4e27abdd47?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                 alt="Casina Farm landscape" 
                 className="w-full h-full object-cover"
               />
