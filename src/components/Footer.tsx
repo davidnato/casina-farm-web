@@ -13,14 +13,14 @@ const Footer = () => {
               We are committed to sustainable farming practices and providing the freshest organic produce to our community.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-farm-beige transition-colors">
+              <a href="https://www.facebook.com/casinafarms/" className="hover:text-farm-beige transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="hover:text-farm-beige transition-colors">
+              <a href="https://www.instagram.com/casinafarms/" className="hover:text-farm-beige transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="hover:text-farm-beige transition-colors">
-                <Twitter size={20} />
+              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="hover:text-farm-beige transition-colors">
+                <Whatsapp size={20} />
               </a>
             </div>
           </div>
