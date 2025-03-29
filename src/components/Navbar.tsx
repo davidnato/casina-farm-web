@@ -16,7 +16,13 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="#" className="text-2xl font-bold text-farm-green">Casina Farm</a>
+            <a href="#" className="flex items-center">
+              <img 
+                src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
+                alt="Casina Farms Logo" 
+                className="h-12 w-auto"
+              />
+            </a>
           </div>
 
           {/* Desktop Menu */}
