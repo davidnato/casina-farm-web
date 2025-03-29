@@ -12,7 +12,7 @@ const About = () => {
           <div className="order-2 md:order-1">
             <h3 className="text-2xl font-semibold text-farm-earth mb-4">Our Story</h3>
             <p className="text-gray-700 mb-4">
-              Founded in 2005, Casina Farm has been dedicated to sustainable and organic farming practices. Our 50-acre farm is nestled in the rolling hills of the countryside, where we grow seasonal vegetables, herbs, and fruits without the use of harmful pesticides.
+              Supporting Casina Farms means investing in resilient ecosystems, fair food systems, and a sustainable future for Kenyas coast.
             </p>
             <p className="text-gray-700 mb-4">
               We believe in the harmony between nature and agriculture, implementing practices that preserve the environment while producing nutritious and delicious food for our community.
