@@ -19,7 +19,7 @@ const About = () => {
             </p>
             <h3 className="text-2xl font-semibold text-farm-earth mb-4 mt-6">Our Mission</h3>
             <p className="text-gray-700">
-              To provide fresh, seasonal, and sustainably grown food that nourishes both people and the planet, while educating our community about the importance of local food systems.
+              At Casina Farms, we’re on a mission to restore ecosystems through sustainable practices, cultivating food security and economic prosperity for smallholder farmers in coastal Kenya, while fostering a flourishing natural environment
             </p>
           </div>
           
