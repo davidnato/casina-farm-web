@@ -12,10 +12,10 @@ const About = () => {
           <div className="order-2 md:order-1">
             <h3 className="text-2xl font-semibold text-farm-earth mb-4">Our Story</h3>
             <p className="text-gray-700 mb-4">
-              Supporting Casina Farms means investing in resilient ecosystems, fair food systems, and a sustainable future for Kenyas coast.
+              Casina Farms is a pioneering social enterprise dedicated to integrating sustainable agriculture, coastal ecosystem restoration, and community development to build resilient coastal communities. Rooted in the Kenyan coast, Casina Farms emerged from the shared struggles of smallholder farmers and the urgent need to break the cycle of poverty and hunger. By empowering these farmers — the unsung stewards of the land — the enterprise promotes fair trade, climate-resilient agriculture, and biodiversity preservation. Through sustainable farming practices, Casina Farms contributes to multiple Sustainable Development Goals (SDGs), including No Poverty (SDG 1), Climate Action (SDG 13), and Life Below Water and Life on Land (SDGs 14 & 15). The mission is to create a food system that nourishes both people and the planet, fostering a future where prosperity, community, and nature thrive together
             </p>
             <p className="text-gray-700 mb-4">
-              We believe in the harmony between nature and agriculture, implementing practices that preserve the environment while producing nutritious and delicious food for our community.
+              Today, this vision is blossoming into reality. Coastal ecosystems once depleted are now vibrant with life — lush vegetation flourishes, marine life thrives, and the hum of pollinators fills the air. Coastal Kenyans, once burdened by food insecurity, now harvest abundant, nutritious produce that sustains their families. Children who once faced malnutrition now run and play with renewed vitality, nourished by nature’s bounty. Casina Farms stands as a testament to the power of sustainable farming and community resilience, where every seed sown is a step toward a healthier, more equitable future.
             </p>
             <h3 className="text-2xl font-semibold text-farm-earth mb-4 mt-6">Our Mission</h3>
             <p className="text-gray-700">
