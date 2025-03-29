@@ -31,25 +31,25 @@ const Products = () => {
     {
       name: "1L Mangrove Honey",
       description: "A seasonal selection of our freshest organic vegetables, harvested daily from our fields.",
-      image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
+      image: "https://photos.fife.usercontent.google.com/pw/AP1GczNQ7HKdXKAFaqZywzvLj2jkFt6RrdazUQMWrcgwmrtYrMPeeLxpUohs-Q=w1348-h953-s-no-gm?authuser=0",
       price: "$25.00"
     },
     {
       name: "380ml Mangrove Honey",
       description: "Farm-fresh eggs from our happy, free-range chickens fed with organic feed.",
-      image: "https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+      image: "https://photos.fife.usercontent.google.com/pw/AP1GczNQ7HKdXKAFaqZywzvLj2jkFt6RrdazUQMWrcgwmrtYrMPeeLxpUohs-Q=w1348-h953-s-no-gm?authuser=0",
       price: "$6.50"
     },
     {
       name: "100ml Mangrove Honey",
       description: "Handcrafted goat cheese made from the milk of our own goats, aged to perfection.",
-      image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
+      image: "https://photos.fife.usercontent.google.com/pw/AP1GczNQ7HKdXKAFaqZywzvLj2jkFt6RrdazUQMWrcgwmrtYrMPeeLxpUohs-Q=w1348-h953-s-no-gm?authuser=0",
       price: "$8.75"
     },
     {
       name: "Customize a Package",
       description: "Pure, raw honey collected from our own beehives located in our flowering meadows.",
-      image: "https://images.unsplash.com/photo-1587049633312-d628ae20fce9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
+      image: "https://photos.fife.usercontent.google.com/pw/AP1GczNQ7HKdXKAFaqZywzvLj2jkFt6RrdazUQMWrcgwmrtYrMPeeLxpUohs-Q=w1348-h953-s-no-gm?authuser=0",
       price: "$12.00"
     },
   ];
