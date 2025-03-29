@@ -32,7 +32,7 @@ const Contact = () => {
                 <MapPin className="text-farm-green mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-farm-earth">Address</h4>
-                  <p className="text-gray-600">123 Farm Road, Countryside, CA 90210</p>
+                  <p className="text-gray-600">Mombasa, Kenya, East Africa</p>
                 </div>
               </div>
               
@@ -40,7 +40,7 @@ const Contact = () => {
                 <Phone className="text-farm-green mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-farm-earth">Phone</h4>
-                  <p className="text-gray-600">(555) 123-4567</p>
+                  <p className="text-gray-600">(254)726 245 357</p>
                 </div>
               </div>
               
@@ -48,7 +48,7 @@ const Contact = () => {
                 <Mail className="text-farm-green mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-farm-earth">Email</h4>
-                  <p className="text-gray-600">info@casinafarm.com</p>
+                  <p className="text-gray-600">casinafarms.ke@gmail.com</p>
                 </div>
               </div>
               
