@@ -20,7 +20,7 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="hover:text-farm-beige transition-colors">
-                <Whatsapp size={20} />
+                <Twitter size={20} />
               </a>
             </div>
           </div>
