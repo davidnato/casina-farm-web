@@ -20,10 +20,12 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <a href="#about" className="text-farm-earth hover:text-farm-green font-medium">About</a>
             <a href="#products" className="text-farm-earth hover:text-farm-green font-medium">Products</a>
             <a href="#gallery" className="text-farm-earth hover:text-farm-green font-medium">Gallery</a>
+            <a href="#team" className="text-farm-earth hover:text-farm-green font-medium">Team</a>
+            <a href="#partners" className="text-farm-earth hover:text-farm-green font-medium">Partners</a>
             <a href="#contact" className="text-farm-earth hover:text-farm-green font-medium">Contact</a>
             <Button className="btn-primary">Order Now</Button>
           </div>
@@ -63,6 +65,20 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Gallery
+              </a>
+              <a 
+                href="#team" 
+                className="text-farm-earth hover:text-farm-green font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Team
+              </a>
+              <a 
+                href="#partners" 
+                className="text-farm-earth hover:text-farm-green font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Partners
               </a>
               <a 
                 href="#contact" 
