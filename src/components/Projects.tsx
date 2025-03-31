@@ -1,14 +1,15 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface ProjectProps {
   title: string;
   image: string;
   description: string;
-  year: string;
+  category: string;
 }
 
-const Project = ({ title, image, description, year }: ProjectProps) => {
+const Project = ({ title, image, description, category }: ProjectProps) => {
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 overflow-hidden">
@@ -17,7 +18,7 @@ const Project = ({ title, image, description, year }: ProjectProps) => {
       <CardContent className="p-6">
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-xl font-semibold text-farm-earth">{title}</h3>
-          <span className="text-farm-green font-medium bg-farm-beige px-2 py-1 rounded-md text-sm">{year}</span>
+          <span className="text-farm-green font-medium bg-farm-beige px-2 py-1 rounded-md text-sm">{category}</span>
         </div>
         <p className="text-gray-700">{description}</p>
       </CardContent>
@@ -28,22 +29,40 @@ const Project = ({ title, image, description, year }: ProjectProps) => {
 const Projects = () => {
   const projects = [
     {
-      title: "Honey Production Expansion",
+      title: "Honey Production & Beekeeping",
       image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "We doubled our honey production capacity by adding new beehives and implementing sustainable beekeeping practices.",
-      year: "2023"
+      description: "Sustainable honey production and beekeeping initiatives that support pollination and biodiversity in coastal ecosystems.",
+      category: "Agriculture"
     },
     {
-      title: "Community Garden Initiative",
+      title: "Community Farm Initiative",
       image: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "We launched a community garden program, providing space and resources for local families to grow their own organic produce.",
-      year: "2022"
+      description: "Collaborative farming spaces where community members learn sustainable agricultural practices and grow nutritious food together.",
+      category: "Community"
     },
     {
-      title: "Farm-to-School Program",
+      title: "Mangrove Restoration",
       image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "We partnered with local schools to provide fresh, organic produce for school lunches and educational farm tours for students.",
-      year: "2021"
+      description: "Protecting and restoring critical mangrove ecosystems that serve as natural barriers against coastal erosion and climate impacts.",
+      category: "Environment"
+    },
+    {
+      title: "Farmer Training Programs",
+      image: "https://images.unsplash.com/photo-1469041797191-50ace28483c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      description: "Educational initiatives to equip local farmers with sustainable farming techniques and climate-resilient agricultural practices.",
+      category: "Education"
+    },
+    {
+      title: "Food Security Network",
+      image: "https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      description: "Creating reliable distribution chains to ensure fresh, local produce reaches communities experiencing food insecurity.",
+      category: "Food Systems"
+    },
+    {
+      title: "Youth Agricultural Engagement",
+      image: "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      description: "Programs designed to inspire the next generation of agricultural innovators and environmental stewards.",
+      category: "Education"
     },
   ];
 
@@ -54,7 +73,7 @@ const Projects = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Our Projects</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-gray-700">
-            Explore some of our recent initiatives aimed at promoting sustainable agriculture and strengthening our community.
+            Explore our ongoing initiatives aimed at promoting sustainable agriculture, ecosystem restoration, and community resilience.
           </p>
         </div>
         
@@ -62,6 +81,10 @@ const Projects = () => {
           {projects.map((project, index) => (
             <Project key={index} {...project} />
           ))}
+        </div>
+        
+        <div className="text-center mt-10">
+          <Button className="btn-secondary">View All Projects</Button>
         </div>
       </div>
     </section>

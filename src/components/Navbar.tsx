@@ -29,10 +29,10 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-6">
             <a href="#about" className="text-farm-earth hover:text-farm-green font-medium">About</a>
             <a href="#products" className="text-farm-earth hover:text-farm-green font-medium">Products</a>
-            <a href="#gallery" className="text-farm-earth hover:text-farm-green font-medium">Gallery</a>
+            <a href="#projects" className="text-farm-earth hover:text-farm-green font-medium">Projects</a>
             <a href="#team" className="text-farm-earth hover:text-farm-green font-medium">Team</a>
-            <a href="#partners" className="text-farm-earth hover:text-farm-green font-medium">Partners</a>
-            <a href="#contact" className="text-farm-earth hover:text-farm-green font-medium">Contact</a>
+            <a href="#blog" className="text-farm-earth hover:text-farm-green font-medium">Blog</a>
+            <a href="#resources" className="text-farm-earth hover:text-farm-green font-medium">Resources</a>
             <Button className="btn-primary">Order Now</Button>
           </div>
 
@@ -66,11 +66,11 @@ const Navbar = () => {
                 Products
               </a>
               <a 
-                href="#gallery" 
+                href="#projects"
                 className="text-farm-earth hover:text-farm-green font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Gallery
+                Projects
               </a>
               <a 
                 href="#team" 
@@ -80,18 +80,18 @@ const Navbar = () => {
                 Team
               </a>
               <a 
-                href="#partners" 
+                href="#blog" 
                 className="text-farm-earth hover:text-farm-green font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Partners
+                Blog
               </a>
               <a 
-                href="#contact" 
+                href="#resources" 
                 className="text-farm-earth hover:text-farm-green font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact
+                Resources
               </a>
               <Button className="btn-primary w-full mt-2">Order Now</Button>
             </div>
