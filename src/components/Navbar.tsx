@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,10 +35,17 @@ const Navbar = () => {
             <a href="#blog" className="text-farm-earth hover:text-farm-green font-medium">Blog</a>
             <a href="#resources" className="text-farm-earth hover:text-farm-green font-medium">Resources</a>
             <Button className="btn-primary">Order Now</Button>
+            <Link to="/admin/login" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
+              <Lock size={16} />
+              <span className="sr-only md:not-sr-only">Admin</span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            <Link to="/admin/login" className="text-farm-earth mr-4 opacity-70">
+              <Lock size={18} />
+            </Link>
             <button
               onClick={toggleMenu}
               className="text-farm-earth focus:outline-none"
