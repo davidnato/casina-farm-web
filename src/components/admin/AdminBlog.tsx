@@ -8,20 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trash, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  image_url: string;
-  link: string;
-  date: string;
-}
+type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
 const AdminBlog = () => {
   const { toast } = useToast();
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [newPost, setNewPost] = useState<Omit<BlogPost, "id">>({
+  const [newPost, setNewPost] = useState<Omit<BlogPost, "id" | "created_at" | "updated_at">>({
     title: "",
     excerpt: "",
     image_url: "",
@@ -30,7 +24,6 @@ const AdminBlog = () => {
   });
   const [loading, setLoading] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [wordpressUrl, setWordpressUrl] = useState("https://casinafarms.wordpress.com/");
 
   // Fetch blog posts from Supabase
   useEffect(() => {
@@ -215,33 +208,6 @@ const AdminBlog = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <div className="border rounded-md p-4 mb-6">
-            <h3 className="font-semibold mb-4">WordPress Integration</h3>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="wordpressUrl">WordPress Blog URL</Label>
-                <div className="flex">
-                  <Input
-                    id="wordpressUrl"
-                    value={wordpressUrl}
-                    onChange={(e) => setWordpressUrl(e.target.value)}
-                    placeholder="https://casinafarms.wordpress.com/"
-                  />
-                  <Button
-                    variant="outline"
-                    className="ml-2"
-                    onClick={() => window.open(wordpressUrl, "_blank")}
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  This is your WordPress blog URL where your blog posts are hosted
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="border rounded-md p-4">
             <h3 className="font-semibold mb-4">Add New Blog Post</h3>
             <div className="space-y-4">
@@ -271,21 +237,21 @@ const AdminBlog = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="newLink">WordPress Post Link</Label>
+                <Label htmlFor="newLink">Post Link (Optional)</Label>
                 <Input
                   id="newLink"
-                  value={newPost.link}
+                  value={newPost.link || ""}
                   onChange={(e) =>
                     setNewPost({ ...newPost, link: e.target.value })
                   }
-                  placeholder="https://casinafarms.wordpress.com/post-slug"
+                  placeholder="https://example.com/post-slug"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="newImageUrl">Featured Image URL</Label>
                 <Input
                   id="newImageUrl"
-                  value={newPost.image_url}
+                  value={newPost.image_url || ""}
                   onChange={(e) =>
                     setNewPost({ ...newPost, image_url: e.target.value })
                   }
@@ -379,7 +345,7 @@ const AdminBlog = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>WordPress Post Link</Label>
+                        <Label>Post Link (Optional)</Label>
                         <Input
                           value={post.link || ""}
                           onChange={(e) => {

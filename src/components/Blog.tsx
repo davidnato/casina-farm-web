@@ -4,16 +4,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 
-interface BlogPostProps {
+type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
+
+interface BlogPostCardProps {
   title: string;
   date: string;
   excerpt: string;
   image: string;
-  url: string;
+  url?: string;
 }
 
-const BlogPost = ({ title, date, excerpt, image, url }: BlogPostProps) => {
+const BlogPost = ({ title, date, excerpt, image, url }: BlogPostCardProps) => {
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 overflow-hidden">
@@ -23,21 +26,23 @@ const BlogPost = ({ title, date, excerpt, image, url }: BlogPostProps) => {
         <p className="text-sm text-farm-green font-medium mb-2">{date}</p>
         <h3 className="text-xl font-semibold text-farm-earth mb-2">{title}</h3>
         <p className="text-gray-700 mb-4 line-clamp-3">{excerpt}</p>
-        <a 
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center text-farm-brown hover:text-farm-green transition-colors"
-        >
-          Read More <ExternalLink size={16} className="ml-1" />
-        </a>
+        {url && (
+          <a 
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-farm-brown hover:text-farm-green transition-colors"
+          >
+            Read More <ExternalLink size={16} className="ml-1" />
+          </a>
+        )}
       </CardContent>
     </Card>
   );
 };
 
 const Blog = () => {
-  const [posts, setPosts] = useState<BlogPostProps[]>([]);
+  const [posts, setPosts] = useState<BlogPostCardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -68,7 +73,7 @@ const Blog = () => {
               excerpt: post.excerpt,
               date: formattedDate,
               image: post.image_url || "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
-              url: post.link || "https://casinafarms.wordpress.com/",
+              url: post.link || undefined,
             };
           });
           
@@ -111,21 +116,18 @@ const Blog = () => {
       date: "May 10, 2023",
       excerpt: "Discover how Casina Farms is revolutionizing sustainable agriculture practices on Kenya's coast, creating resilient food systems for local communities.",
       image: "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
-      url: "https://casinafarms.wordpress.com/"
     },
     {
       title: "Empowering Local Farmers Through Education",
       date: "June 22, 2023",
       excerpt: "Learn about our recent initiatives to provide agricultural training and resources to smallholder farmers in coastal Kenya.",
       image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
-      url: "https://casinafarms.wordpress.com/"
     },
     {
       title: "The Impact of Climate Change on Coastal Agriculture",
       date: "July 15, 2023",
       excerpt: "Exploring the challenges faced by coastal farmers due to climate change and our adaptive strategies for resilient farming.",
       image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
-      url: "https://casinafarms.wordpress.com/"
     },
   ];
 
@@ -162,19 +164,6 @@ const Blog = () => {
             ))}
           </div>
         )}
-        
-        <div className="text-center mt-10">
-          <Button className="btn-secondary" asChild>
-            <a 
-              href="https://casinafarms.wordpress.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center"
-            >
-              Visit Our Blog <ExternalLink size={16} className="ml-2" />
-            </a>
-          </Button>
-        </div>
       </div>
     </section>
   );
