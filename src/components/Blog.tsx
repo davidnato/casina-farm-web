@@ -1,7 +1,9 @@
 
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPostProps {
   title: string;
@@ -35,29 +37,99 @@ const BlogPost = ({ title, date, excerpt, image, url }: BlogPostProps) => {
 };
 
 const Blog = () => {
-  const blogPosts = [
+  const [posts, setPosts] = useState<BlogPostProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchBlogPosts() {
+      try {
+        const { data, error } = await supabase
+          .from("blog_posts")
+          .select("*")
+          .order("date", { ascending: false });
+
+        if (error) {
+          console.error("Error fetching blog posts:", error);
+          return;
+        }
+
+        if (data) {
+          const formattedPosts = data.map((post) => {
+            // Format the date to a readable string
+            const dateObj = new Date(post.date);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            });
+
+            return {
+              title: post.title,
+              excerpt: post.excerpt,
+              date: formattedDate,
+              image: post.image_url || "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
+              url: post.link || "https://casinafarms.wordpress.com/",
+            };
+          });
+          
+          setPosts(formattedPosts);
+        }
+      } catch (error) {
+        console.error("Error in fetchBlogPosts:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBlogPosts();
+
+    // Subscribe to real-time changes
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'blog_posts'
+        },
+        () => {
+          fetchBlogPosts();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // Fallback content if no blog posts are available yet
+  const fallbackPosts = [
     {
       title: "Sustainable Food Farming in Kenya's Coastal Region",
       date: "May 10, 2023",
       excerpt: "Discover how Casina Farms is revolutionizing sustainable agriculture practices on Kenya's coast, creating resilient food systems for local communities.",
-      image: "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
       url: "https://casinafarms.wordpress.com/"
     },
     {
       title: "Empowering Local Farmers Through Education",
       date: "June 22, 2023",
       excerpt: "Learn about our recent initiatives to provide agricultural training and resources to smallholder farmers in coastal Kenya.",
-      image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
       url: "https://casinafarms.wordpress.com/"
     },
     {
       title: "The Impact of Climate Change on Coastal Agriculture",
       date: "July 15, 2023",
       excerpt: "Exploring the challenges faced by coastal farmers due to climate change and our adaptive strategies for resilient farming.",
-      image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
       url: "https://casinafarms.wordpress.com/"
     },
   ];
+
+  const displayPosts = posts.length > 0 ? posts : fallbackPosts;
 
   return (
     <section id="blog" className="section-padding bg-farm-cream/50">
@@ -70,11 +142,26 @@ const Blog = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {blogPosts.map((post, index) => (
-            <BlogPost key={index} {...post} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((item) => (
+              <Card key={item} className="overflow-hidden shadow-md animate-pulse">
+                <div className="h-48 bg-gray-200"></div>
+                <CardContent className="p-6">
+                  <div className="h-4 bg-gray-200 rounded mb-3"></div>
+                  <div className="h-12 bg-gray-200 rounded mb-3"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {displayPosts.map((post, index) => (
+              <BlogPost key={index} {...post} />
+            ))}
+          </div>
+        )}
         
         <div className="text-center mt-10">
           <Button className="btn-secondary" asChild>
