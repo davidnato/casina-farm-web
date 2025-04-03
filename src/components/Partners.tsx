@@ -22,7 +22,7 @@ const Partners = () => {
   const partners = [
     {
       name: "Local Farmers Market",
-      logo: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      logo: "https://casinafarms.com/images/plogo3.jpg",
       description: "We're proud to be a regular vendor at the Local Farmers Market."
     },
     {
