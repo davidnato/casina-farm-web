@@ -22,27 +22,27 @@ const Partners = () => {
   const partners = [
     {
       name: "Local Farmers Market",
-      logo: "https://casinafarms.com/images/plogo3.jpg",
+      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "We're proud to be a regular vendor at the Local Farmers Market."
     },
     {
       name: "Organic Certification",
-      logo: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Our farm is certified organic by the OCB."
     },
     {
       name: "Farm-to-Table",
-      logo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "We partner with local restaurants."
     },
     {
       name: "Community Garden",
-      logo: "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Supporting local community gardens."
     },
     {
       name: "Agricultural School",
-      logo: "https://images.unsplash.com/photo-1571529599525-dd9d29d15fa5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Providing education opportunities."
     },
   ];
