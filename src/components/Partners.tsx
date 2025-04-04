@@ -22,17 +22,17 @@ const Partners = () => {
   const partners = [
     {
       name: "Local Farmers Market",
-      logo: "https://images.unsplash.com/photo-1743708882698-70c7493fc146?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      logo: "/lovable-uploads/plogo1.jpg",
       description: "We're proud to be a regular vendor at the Local Farmers Market."
     },
     {
       name: "Organic Certification",
-      logo: "https://images.unsplash.com/photo-1743708887470-f09dfde13160?q=80&w=2123&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      logo: "/lovable-uploads/plogo2.jpg",
       description: "Our farm is certified organic by the OCB."
     },
     {
       name: "Community Farm",
-      logo: "/lovable-uploads/plogo2.jpg",
+      logo: "/lovable-uploads/plogo3.jpg",
       description: "Supporting local community farming initiatives."
     },
     {
@@ -41,6 +41,12 @@ const Partners = () => {
       description: "Working together to preserve coastal ecosystems."
     },
     {
+      name: "Agricultural College",
+      logo: "/lovable-uploads/plogo2.jpg",
+      description: "Partnering for education and research in sustainable farming."
+    }
+  ];
+      {
       name: "Agricultural College",
       logo: "/lovable-uploads/plogo3.jpg",
       description: "Partnering for education and research in sustainable farming."
