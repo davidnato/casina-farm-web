@@ -22,7 +22,7 @@ const Hero = () => {
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button className="btn-primary">Learn More</Button>
-            <Button className="btn-secondary">Visit Us</Button>
+            <Button className="btn-secondary" onClick={() => window.open("https://maps.app.goo.gl/VrsNFwgxX8KoC1G89", "_blank")}>Visit Us</Button>
           </div>
         </div>
       </div>
