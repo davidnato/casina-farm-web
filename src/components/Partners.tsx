@@ -34,7 +34,7 @@ const Partners = () => {
       name: "Local Farmers Market",
       logo: "/lovable-uploads/plogo2.jpg",
       description: "We're proud to be a regular vendor at the Local Farmers Market."
-    };
+    }
   ];
 
   const marqueeRef = useRef<HTMLDivElement>(null);
