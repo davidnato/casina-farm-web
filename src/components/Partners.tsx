@@ -21,7 +21,7 @@ const Partner = ({ name, logo }: PartnerProps) => {
 const Partners = () => {
   const partners = [
     {
-      name: "Local Farmers Market",
+      name: "Majoreni Beach MAnagement Unit",
       logo: "/lovable-uploads/plogo1.jpg",
       description: "We're proud to be a regular vendor at the Local Farmers Market."
     },
@@ -31,23 +31,23 @@ const Partners = () => {
       description: "Our farm is certified organic by the OCB."
     },
     {
-      name: "Community Farm",
+      name: "Cifor",
       logo: "/lovable-uploads/plogo3.jpg",
       description: "Supporting local community farming initiatives."
     },
     {
-      name: "Conservation Trust",
+      name: "Majoreni Beach MAnagement Unit",
       logo: "/lovable-uploads/plogo1.jpg",
       description: "Working together to preserve coastal ecosystems."
     },
     {
-      name: "Agricultural College",
+      name: "Amani Jipange",
       logo: "/lovable-uploads/plogo2.jpg",
       description: "Partnering for education and research in sustainable farming."
     }
   ];
       {
-      name: "Agricultural College",
+      name: "Cifor",
       logo: "/lovable-uploads/plogo3.jpg",
       description: "Partnering for education and research in sustainable farming."
     }
