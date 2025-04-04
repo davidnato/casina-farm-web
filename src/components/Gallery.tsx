@@ -7,27 +7,27 @@ const Gallery = () => {
   
   const images = [
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/1.jpg",
       alt: "Farm landscape"
     },
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/5.jpg",
       alt: "Farm animals"
     },
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/4.jpg",
       alt: "Fresh vegetables"
     },
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/6.jpg",
       alt: "Farm to table"
     },
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/7.jpg",
       alt: "Organic farming"
     },
     {
-      src: "https://images.unsplash.com/photo-1743224982230-da2f06744233?q=80&w=2021&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "/lovable-uploads/1.jpg",
       alt: "Farm produce"
     }
   ];
