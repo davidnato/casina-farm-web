@@ -44,9 +44,8 @@ const Partners = () => {
       name: "Amani Jipange",
       logo: "/lovable-uploads/plogo2.jpg",
       description: "Partnering for education and research in sustainable farming."
-    }
-  ];
-      {
+    },
+    {
       name: "Cifor",
       logo: "/lovable-uploads/plogo3.jpg",
       description: "Partnering for education and research in sustainable farming."
