@@ -6,9 +6,9 @@ const Footer = () => {
   return (
     <footer className="bg-farm-green text-white">
       <div className="farm-container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-1">
             <div className="flex items-center mb-4">
               <img 
                 src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
@@ -17,20 +17,9 @@ const Footer = () => {
               />
             </div>
             <p className="mb-6 text-sm opacity-80">
-              Casina Farms is a pioneering social enterprise dedicated to integrating sustainable agriculture, 
-              coastal ecosystem restoration, and community development to build resilient coastal communities.
+              Casina Farms is a pioneering social enterprise dedicated to sustainable agriculture, 
+              coastal ecosystem restoration, and community development.
             </p>
-            <div className="flex space-x-3">
-              <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook">
-                <Facebook size={18} />
-              </a>
-              <a href="https://www.instagram.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram">
-                <Instagram size={18} />
-              </a>
-              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter">
-                <Twitter size={18} />
-              </a>
-            </div>
           </div>
           
           {/* Quick Links */}
@@ -41,19 +30,19 @@ const Footer = () => {
                 <a href="#about" className="hover:text-farm-beige transition-colors">Our Story</a>
               </li>
               <li>
-                <a href="#products" className="hover:text-farm-beige transition-colors">Products</a>
+                <a href="#projects" className="hover:text-farm-beige transition-colors">Projects</a>
               </li>
               <li>
-                <a href="#projects" className="hover:text-farm-beige transition-colors">Projects</a>
+                <a href="#products" className="hover:text-farm-beige transition-colors">Products</a>
               </li>
               <li>
                 <a href="#team" className="hover:text-farm-beige transition-colors">Our Team</a>
               </li>
               <li>
-                <a href="#blog" className="hover:text-farm-beige transition-colors">Blog</a>
+                <a href="#resources" className="hover:text-farm-beige transition-colors">Resources</a>
               </li>
               <li>
-                <a href="#resources" className="hover:text-farm-beige transition-colors">Resources</a>
+                <a href="#blog" className="hover:text-farm-beige transition-colors">Blog</a>
               </li>
             </ul>
           </div>
@@ -75,6 +64,17 @@ const Footer = () => {
                 <span>casinafarms.ke@gmail.com</span>
               </li>
             </ul>
+            <div className="flex space-x-3 mt-4">
+              <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook">
+                <Facebook size={18} />
+              </a>
+              <a href="https://www.instagram.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram">
+                <Instagram size={18} />
+              </a>
+              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter">
+                <Twitter size={18} />
+              </a>
+            </div>
           </div>
           
           {/* Newsletter */}

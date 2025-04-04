@@ -31,9 +31,19 @@ const Partners = () => {
       description: "Our farm is certified organic by the OCB."
     },
     {
-      name: "Local Farmers Market",
+      name: "Community Farm",
       logo: "/lovable-uploads/plogo2.jpg",
-      description: "We're proud to be a regular vendor at the Local Farmers Market."
+      description: "Supporting local community farming initiatives."
+    },
+    {
+      name: "Conservation Trust",
+      logo: "/lovable-uploads/plogo1.jpg",
+      description: "Working together to preserve coastal ecosystems."
+    },
+    {
+      name: "Agricultural College",
+      logo: "/lovable-uploads/plogo3.jpg",
+      description: "Partnering for education and research in sustainable farming."
     }
   ];
 
