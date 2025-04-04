@@ -88,15 +88,15 @@ const Projects = () => {
   // Fallback content if no projects are available yet
   const fallbackProjects = [
     {
-      title: "Honey Production & Beekeeping",
+      title: "Mangrove Honey Value Chain",
       image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Sustainable honey production and beekeeping initiatives that support pollination and biodiversity in coastal ecosystems.",
+      description: "Casina Farms has partnered with coastal communities living adjacent to mangrove ecosystems to explore and revolutionize the mangrove honey value chain. Our efforts focus on active mangrove restoration and conservation, providing a unique and sustainable source of income for local communities.",
       category: "Agriculture"
     },
     {
-      title: "Community Farm Initiative",
+      title: "Casina Farms Mkulima - Innovative Climate-Smart Agriculture",
       image: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Collaborative farming spaces where community members learn sustainable agricultural practices and grow nutritious food together.",
+      description: "Casina Farms Mkulima is another transformative project by Casina Farms. We partner with smallholder farmers to enhance food security and promote climate justice through innovative climate-smart agricultural practices.",
       category: "Community"
     },
     {
