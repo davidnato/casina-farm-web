@@ -1,4 +1,15 @@
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card } from "@/components/ui/card";
+
 const About = () => {
   return (
     <section id="about" className="section-padding bg-white">
@@ -26,64 +37,6 @@ const About = () => {
               <p className="text-gray-700 mb-6">
                 A thriving, regenerative food system that nourishes both people and the planet, fostering a future where prosperity, community, and nature flourish together.
               </p>
-              
-              <h3 className="text-2xl font-semibold text-farm-earth mb-4">Our Core Values</h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse mb-6">
-                  <thead>
-                    <tr className="bg-farm-green/10">
-                      <th className="border border-gray-300 px-4 py-2 text-left">Value</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">C - Connectedness</td>
-                      <td className="border border-gray-300 px-4 py-2">Build Community through Trust: We cultivate meaningful connections with our customers, delivering personalized experiences that surpass their expectations and nurturing a sense of belonging through open communication, empathy, and mutual support.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">A - Adaptability</td>
-                      <td className="border border-gray-300 px-4 py-2">Embrace Change: We stay agile and responsive to our evolving environment, social conditions, and opportunities, adapting our sustainable strategies to ensure long-term viability and success.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">S - Sustainable Practices</td>
-                      <td className="border border-gray-300 px-4 py-2">Preserve the Natural World: We prioritize practices that maintain ecological balance, minimize our environmental impact, and preserve the natural world for future generations.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">I - Innovative Solutions</td>
-                      <td className="border border-gray-300 px-4 py-2">Innovate for a Better Future: We develop and implement creative solutions to drive positive change, stay ahead of the curve, and address emerging challenges.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">N - Nurturing Communities</td>
-                      <td className="border border-gray-300 px-4 py-2">Empower Smallholder Farmers: We foster growth, development, and well-being in our communities and ecosystems, supporting smallholder farmers to improve their livelihoods and contribute to food security.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">A - Authenticity</td>
-                      <td className="border border-gray-300 px-4 py-2">Act with Integrity: We ensure transparency, honesty, and integrity in all our interactions and operations, taking ownership of our actions and their impact on the environment and communities.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">F - Fairness</td>
-                      <td className="border border-gray-300 px-4 py-2">Foster Fairness: We promote equitable opportunities, fostering fair trade practices that ensure all participants in the supply chain are treated with respect and receive fair compensation.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">A - Agility</td>
-                      <td className="border border-gray-300 px-4 py-2">Rise Above Challenges: We build resilience and adaptability, reinforcing our infrastructure and community ties to remain steadfast and productive through challenges and setbacks.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">R - Resource Stewardship</td>
-                      <td className="border border-gray-300 px-4 py-2">Optimize Resource Utilization: We stay aware of the interconnectedness of the natural world, mindful of our actions' consequences, and strive to make informed, sustainable decisions, optimizing our resource utilization and minimizing waste.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">M - Mutual Support</td>
-                      <td className="border border-gray-300 px-4 py-2">Maintain a Collaborative Culture: We foster a culture of collaboration, growth and development within our team through training opportunities and across partners communities and customers by sharing knowledge, best practices, and expertise to multiply our impact and drive positive change.</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2 font-semibold">S - Security</td>
-                      <td className="border border-gray-300 px-4 py-2">(Food Security) Provide Nutritious Food: We foster food security by promoting sustainable production practices, supporting local food systems, and ensuring access to nutritious food.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
           </div>
           
@@ -96,6 +49,82 @@ const About = () => {
               />
             </div>
           </div>
+        </div>
+
+        <div className="mt-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4 text-center">Our Core Values</h2>
+          <div className="w-24 h-1 bg-farm-brown mx-auto mb-10"></div>
+          
+          <Card className="w-full border-farm-green/20 shadow-lg">
+            <ScrollArea className="h-[70vh] w-full rounded-md">
+              <Table>
+                <TableHeader className="sticky top-0 bg-farm-green/10">
+                  <TableRow>
+                    <TableHead className="w-[100px] font-bold text-farm-green">Letter</TableHead>
+                    <TableHead className="w-[150px] font-bold text-farm-green">Value</TableHead>
+                    <TableHead className="font-bold text-farm-green">Description</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">C</TableCell>
+                    <TableCell className="font-semibold">Connectedness</TableCell>
+                    <TableCell>Build Community through Trust: We cultivate meaningful connections with our customers, delivering personalized experiences that surpass their expectations and nurturing a sense of belonging through open communication, empathy, and mutual support.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">A</TableCell>
+                    <TableCell className="font-semibold">Adaptability</TableCell>
+                    <TableCell>Embrace Change: We stay agile and responsive to our evolving environment, social conditions, and opportunities, adapting our sustainable strategies to ensure long-term viability and success.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">S</TableCell>
+                    <TableCell className="font-semibold">Sustainable Practices</TableCell>
+                    <TableCell>Preserve the Natural World: We prioritize practices that maintain ecological balance, minimize our environmental impact, and preserve the natural world for future generations.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">I</TableCell>
+                    <TableCell className="font-semibold">Innovative Solutions</TableCell>
+                    <TableCell>Innovate for a Better Future: We develop and implement creative solutions to drive positive change, stay ahead of the curve, and address emerging challenges.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">N</TableCell>
+                    <TableCell className="font-semibold">Nurturing Communities</TableCell>
+                    <TableCell>Empower Smallholder Farmers: We foster growth, development, and well-being in our communities and ecosystems, supporting smallholder farmers to improve their livelihoods and contribute to food security.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">A</TableCell>
+                    <TableCell className="font-semibold">Authenticity</TableCell>
+                    <TableCell>Act with Integrity: We ensure transparency, honesty, and integrity in all our interactions and operations, taking ownership of our actions and their impact on the environment and communities.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">F</TableCell>
+                    <TableCell className="font-semibold">Fairness</TableCell>
+                    <TableCell>Foster Fairness: We promote equitable opportunities, fostering fair trade practices that ensure all participants in the supply chain are treated with respect and receive fair compensation.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">A</TableCell>
+                    <TableCell className="font-semibold">Agility</TableCell>
+                    <TableCell>Rise Above Challenges: We build resilience and adaptability, reinforcing our infrastructure and community ties to remain steadfast and productive through challenges and setbacks.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">R</TableCell>
+                    <TableCell className="font-semibold">Resource Stewardship</TableCell>
+                    <TableCell>Optimize Resource Utilization: We stay aware of the interconnectedness of the natural world, mindful of our actions' consequences, and strive to make informed, sustainable decisions, optimizing our resource utilization and minimizing waste.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">M</TableCell>
+                    <TableCell className="font-semibold">Mutual Support</TableCell>
+                    <TableCell>Maintain a Collaborative Culture: We foster a culture of collaboration, growth and development within our team through training opportunities and across partners communities and customers by sharing knowledge, best practices, and expertise to multiply our impact and drive positive change.</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold text-xl text-farm-green">S</TableCell>
+                    <TableCell className="font-semibold">Security</TableCell>
+                    <TableCell>(Food Security) Provide Nutritious Food: We foster food security by promoting sustainable production practices, supporting local food systems, and ensuring access to nutritious food.</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </ScrollArea>
+          </Card>
         </div>
       </div>
     </section>
