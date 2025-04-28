@@ -1,13 +1,30 @@
 
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
+  const heroImages = [
+    "/lovable-uploads/hero.jpg",
+    "/lovable-uploads/1.jpg",
+    "/lovable-uploads/4.jpg"
+  ];
+  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative bg-farm-beige overflow-hidden">
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-20" 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-20 transition-opacity duration-1000"
         style={{ 
-          backgroundImage: "url('/lovable-uploads/hero.jpg')" 
+          backgroundImage: `url('${heroImages[currentImageIndex]}')` 
         }}
       />
       <div className="farm-container relative z-10 py-20 md:py-28 lg:py-32">

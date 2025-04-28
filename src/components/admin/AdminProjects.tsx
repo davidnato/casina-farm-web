@@ -2,15 +2,29 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Trash } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Pencil, Trash2, Plus } from "lucide-react";
 
 interface Project {
-  id: string;
+  id?: number;
   title: string;
   description: string;
   image_url: string;
@@ -20,359 +34,296 @@ interface Project {
 const AdminProjects = () => {
   const { toast } = useToast();
   const [projects, setProjects] = useState<Project[]>([]);
-  const [newProject, setNewProject] = useState<Omit<Project, "id">>({
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentProject, setCurrentProject] = useState<Project>({
     title: "",
     description: "",
     image_url: "",
-    category: "",
+    category: ""
   });
-  const [loading, setLoading] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Fetch projects from Supabase
   useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) {
-          console.error("Error fetching projects:", error);
-          toast({
-            title: "Error",
-            description: "Failed to fetch projects. Please try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-
-        if (data) {
-          setProjects(data);
-        }
-      } catch (error) {
-        console.error("Error in fetchProjects:", error);
-      } finally {
-        setIsInitialLoading(false);
-      }
-    }
-
     fetchProjects();
+  }, []);
 
-    // Subscribe to real-time changes
-    const channel = supabase
-      .channel('schema-db-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'projects'
-        },
-        () => {
-          fetchProjects();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [toast]);
-
-  const handleAddProject = async () => {
-    if (!newProject.title || !newProject.description) {
-      toast({
-        title: "Missing information",
-        description: "Please provide at least a title and description for the project.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setLoading(true);
-    
+  const fetchProjects = async () => {
+    setIsLoading(true);
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("projects")
-        .insert([newProject]);
-      
-      if (error) {
-        console.error("Error adding project:", error);
-        toast({
-          title: "Error",
-          description: "Failed to add project. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      setNewProject({
-        title: "",
-        description: "",
-        image_url: "",
-        category: "",
-      });
-      
-      toast({
-        title: "Project added",
-        description: "New project has been added successfully",
-      });
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setProjects(data || []);
     } catch (error) {
-      console.error("Error in handleAddProject:", error);
+      console.error("Error fetching projects:", error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: "Could not fetch projects",
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const handleUpdateProject = async (project: Project) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setCurrentProject({ ...currentProject, [name]: value });
+  };
+
+  const resetForm = () => {
+    setCurrentProject({
+      title: "",
+      description: "",
+      image_url: "",
+      category: ""
+    });
+    setIsEditing(false);
+    setIsDialogOpen(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
     try {
-      const { error } = await supabase
-        .from("projects")
-        .update({
-          title: project.title,
-          description: project.description,
-          image_url: project.image_url,
-          category: project.category,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", project.id);
-      
-      if (error) {
-        console.error("Error updating project:", error);
+      if (isEditing && currentProject.id) {
+        // Update existing project
+        const { error } = await supabase
+          .from("projects")
+          .update({
+            title: currentProject.title,
+            description: currentProject.description,
+            image_url: currentProject.image_url,
+            category: currentProject.category
+          })
+          .eq("id", currentProject.id);
+
+        if (error) throw error;
+
         toast({
-          title: "Error",
-          description: "Failed to update project. Please try again.",
-          variant: "destructive",
+          title: "Success",
+          description: "Project updated successfully",
+        });
+      } else {
+        // Create new project
+        const { error } = await supabase
+          .from("projects")
+          .insert([{
+            title: currentProject.title,
+            description: currentProject.description,
+            image_url: currentProject.image_url,
+            category: currentProject.category,
+            created_at: new Date().toISOString()
+          }]);
+
+        if (error) throw error;
+
+        toast({
+          title: "Success",
+          description: "Project created successfully",
         });
       }
+
+      resetForm();
+      fetchProjects();
     } catch (error) {
-      console.error("Error in handleUpdateProject:", error);
+      console.error("Error saving project:", error);
+      toast({
+        title: "Error",
+        description: "Could not save project",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleRemoveProject = async (id: string) => {
+  const handleEdit = (project: Project) => {
+    setCurrentProject(project);
+    setIsEditing(true);
+    setIsDialogOpen(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this project?")) return;
+
+    setIsLoading(true);
     try {
       const { error } = await supabase
         .from("projects")
         .delete()
         .eq("id", id);
-      
-      if (error) {
-        console.error("Error removing project:", error);
-        toast({
-          title: "Error",
-          description: "Failed to remove project. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-      
+
+      if (error) throw error;
+
       toast({
-        title: "Project removed",
-        description: "Project has been removed successfully",
+        title: "Success",
+        description: "Project deleted successfully",
       });
+      fetchProjects();
     } catch (error) {
-      console.error("Error in handleRemoveProject:", error);
+      console.error("Error deleting project:", error);
+      toast({
+        title: "Error",
+        description: "Could not delete project",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (isInitialLoading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Loading projects...</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="border rounded-md p-4">
-                <div className="h-6 bg-gray-200 rounded animate-pulse mb-4"></div>
-                <div className="h-20 bg-gray-200 rounded animate-pulse"></div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Manage Projects</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <div className="border rounded-md p-4">
-            <h3 className="font-semibold mb-4">Add New Project</h3>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="newTitle">Project Title*</Label>
-                <Input
-                  id="newTitle"
-                  value={newProject.title}
-                  onChange={(e) =>
-                    setNewProject({ ...newProject, title: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="newDescription">Description*</Label>
-                <Textarea
-                  id="newDescription"
-                  value={newProject.description}
-                  onChange={(e) =>
-                    setNewProject({
-                      ...newProject,
-                      description: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="newCategory">Category</Label>
-                <Input
-                  id="newCategory"
-                  value={newProject.category}
-                  onChange={(e) =>
-                    setNewProject({ ...newProject, category: e.target.value })
-                  }
-                  placeholder="e.g., Agriculture, Environment, Education"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="newImageUrl">Image URL</Label>
-                <Input
-                  id="newImageUrl"
-                  value={newProject.image_url}
-                  onChange={(e) =>
-                    setNewProject({ ...newProject, image_url: e.target.value })
-                  }
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
-              <Button
-                className="w-full"
-                onClick={handleAddProject}
-                disabled={loading || !newProject.title || !newProject.description}
-              >
-                <Plus className="h-4 w-4 mr-2" /> {loading ? "Adding..." : "Add Project"}
-              </Button>
-            </div>
-          </div>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-farm-earth">Manage Projects</h2>
+        <Button
+          onClick={() => {
+            resetForm();
+            setIsDialogOpen(true);
+          }}
+          className="flex items-center gap-1"
+        >
+          <Plus size={16} />
+          Add Project
+        </Button>
+      </div>
 
-          <h3 className="font-semibold mt-8 mb-4">Current Projects</h3>
-          <div className="space-y-6">
+      {isLoading && projects.length === 0 ? (
+        <div className="text-center p-10">
+          <div className="animate-spin h-8 w-8 border-4 border-farm-green border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p>Loading projects...</p>
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {projects.length === 0 ? (
-              <div className="text-center py-6 text-muted-foreground">
-                No projects yet. Add your first project above.
-              </div>
+              <TableRow>
+                <TableCell colSpan={4} className="text-center p-4">
+                  No projects found. Add your first project!
+                </TableCell>
+              </TableRow>
             ) : (
               projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="border rounded-md p-4 relative group"
-                >
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleRemoveProject(project.id)}
-                  >
-                    <Trash className="h-4 w-4" />
-                  </Button>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Project Title*</Label>
-                      <Input
-                        value={project.title}
-                        onChange={(e) => {
-                          const updated = projects.map((p) =>
-                            p.id === project.id
-                              ? { ...p, title: e.target.value }
-                              : p
-                          );
-                          setProjects(updated);
-                        }}
-                        onBlur={() => handleUpdateProject(project)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Description*</Label>
-                      <Textarea
-                        value={project.description}
-                        onChange={(e) => {
-                          const updated = projects.map((p) =>
-                            p.id === project.id
-                              ? { ...p, description: e.target.value }
-                              : p
-                          );
-                          setProjects(updated);
-                        }}
-                        onBlur={() => handleUpdateProject(project)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Category</Label>
-                      <Input
-                        value={project.category || ""}
-                        onChange={(e) => {
-                          const updated = projects.map((p) =>
-                            p.id === project.id
-                              ? { ...p, category: e.target.value }
-                              : p
-                          );
-                          setProjects(updated);
-                        }}
-                        onBlur={() => handleUpdateProject(project)}
-                        placeholder="e.g., Agriculture, Environment, Education"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Image URL</Label>
-                      <Input
-                        value={project.image_url || ""}
-                        onChange={(e) => {
-                          const updated = projects.map((p) =>
-                            p.id === project.id
-                              ? { ...p, image_url: e.target.value }
-                              : p
-                          );
-                          setProjects(updated);
-                        }}
-                        onBlur={() => handleUpdateProject(project)}
-                        placeholder="https://example.com/image.jpg"
-                      />
-                      {project.image_url && (
-                        <div className="mt-2 max-w-xs">
-                          <img 
-                            src={project.image_url} 
-                            alt={project.title}
-                            className="rounded-md h-20 object-cover" 
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = "https://placehold.co/600x400?text=Invalid+Image+URL";
-                            }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <TableRow key={project.id}>
+                  <TableCell className="font-medium">{project.title}</TableCell>
+                  <TableCell>{project.category}</TableCell>
+                  <TableCell className="max-w-xs truncate">
+                    {project.description}
+                  </TableCell>
+                  <TableCell className="text-right space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEdit(project)}
+                    >
+                      <Pencil size={16} />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => project.id && handleDelete(project.id)}
+                    >
+                      <Trash2 size={16} />
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))
             )}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+          </TableBody>
+        </Table>
+      )}
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {isEditing ? "Edit Project" : "Add New Project"}
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                name="title"
+                value={currentProject.title}
+                onChange={handleInputChange}
+                placeholder="Project title"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="category">Category</Label>
+              <Input
+                id="category"
+                name="category"
+                value={currentProject.category}
+                onChange={handleInputChange}
+                placeholder="e.g. Agriculture, Community, Environment"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={currentProject.description}
+                onChange={handleInputChange}
+                placeholder="Project description"
+                required
+                rows={4}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="image_url">Image URL</Label>
+              <Input
+                id="image_url"
+                name="image_url"
+                value={currentProject.image_url}
+                onChange={handleInputChange}
+                placeholder="https://example.com/image.jpg"
+                required
+              />
+            </div>
+            
+            <DialogFooter>
+              <Button 
+                type="button" 
+                variant="outline"
+                onClick={resetForm}
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Saving..." : isEditing ? "Update" : "Create"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 

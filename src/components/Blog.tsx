@@ -41,7 +41,7 @@ const BlogPost = ({ title, date, excerpt, image, url }: BlogPostCardProps) => {
   );
 };
 
-const Blog = () => {
+const Publications = () => {
   const [posts, setPosts] = useState<BlogPostCardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -134,13 +134,13 @@ const Blog = () => {
   const displayPosts = posts.length > 0 ? posts : fallbackPosts;
 
   return (
-    <section id="blog" className="section-padding bg-farm-cream/50">
+    <section id="publications" className="section-padding bg-farm-cream/50">
       <div className="farm-container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Latest Updates</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Publications</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-gray-700">
-            Stay updated with our latest news, insights, and stories from Casina Farms.
+            Explore our research papers, articles, and insights about sustainable farming and ecosystem restoration.
           </p>
         </div>
         
@@ -169,4 +169,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default Publications;

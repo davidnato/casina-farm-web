@@ -1,15 +1,46 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll("section[id]");
+      
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute("id") || "";
+        
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          setActiveTab(sectionId);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: "home", label: "Home", href: "#" },
+    { id: "about", label: "About", href: "#about" },
+    { id: "services", label: "Services", href: "#services" },
+    { id: "products", label: "Products", href: "#products" },
+    { id: "projects", label: "Projects", href: "#projects" },
+    { id: "team", label: "Team", href: "#team" },
+    { id: "publications", label: "Publications", href: "#publications" },
+    { id: "partners", label: "Partners", href: "#partners" },
+  ];
 
   return (
     <nav className="bg-farm-beige/90 sticky top-0 z-50 shadow-sm">
@@ -28,14 +59,23 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            <a href="#about" className="text-farm-earth hover:text-farm-green font-medium">About</a>
-            <a href="#products" className="text-farm-earth hover:text-farm-green font-medium">Products</a>
-            <a href="#projects" className="text-farm-earth hover:text-farm-green font-medium">Projects</a>
-            <a href="#team" className="text-farm-earth hover:text-farm-green font-medium">Team</a>
-            <a href="#blog" className="text-farm-earth hover:text-farm-green font-medium">Blog</a>
-            <a href="#resources" className="text-farm-earth hover:text-farm-green font-medium">Resources</a>
+            {navItems.map((item) => (
+              <a 
+                key={item.id}
+                href={item.href} 
+                className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
+                  activeTab === item.id ? "text-farm-green font-semibold" : ""
+                }`}
+                onClick={() => item.id === "home" && setActiveTab("home")}
+              >
+                {item.label}
+                {activeTab === item.id && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
+                )}
+              </a>
+            ))}
             <Button className="btn-primary">Order Now</Button>
-            <Link to="/admin/login" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
+            <Link to="/admin" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
               <Lock size={16} />
               <span className="sr-only md:not-sr-only">Admin</span>
             </Link>
@@ -43,7 +83,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <Link to="/admin/login" className="text-farm-earth mr-4 opacity-70">
+            <Link to="/admin" className="text-farm-earth mr-4 opacity-70">
               <Lock size={18} />
             </Link>
             <button
@@ -59,48 +99,21 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4">
             <div className="flex flex-col space-y-4">
-              <a 
-                href="#about" 
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </a>
-              <a 
-                href="#products"
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Products
-              </a>
-              <a 
-                href="#projects"
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Projects
-              </a>
-              <a 
-                href="#team" 
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Team
-              </a>
-              <a 
-                href="#blog" 
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
-              </a>
-              <a 
-                href="#resources" 
-                className="text-farm-earth hover:text-farm-green font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Resources
-              </a>
+              {navItems.map((item) => (
+                <a 
+                  key={item.id}
+                  href={item.href} 
+                  className={`text-farm-earth hover:text-farm-green font-medium ${
+                    activeTab === item.id ? "text-farm-green font-semibold" : ""
+                  }`}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    item.id === "home" && setActiveTab("home");
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
               <Button className="btn-primary w-full mt-2">Order Now</Button>
             </div>
           </div>

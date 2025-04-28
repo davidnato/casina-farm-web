@@ -7,8 +7,8 @@ import Gallery from "@/components/Gallery";
 import Team from "@/components/Team";
 import Partners from "@/components/Partners";
 import Projects from "@/components/Projects";
-import Blog from "@/components/Blog";
-import Resources from "@/components/Resources";
+import Publications from "@/components/Blog";
+import Services from "@/components/Services";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -17,12 +17,12 @@ const Index = () => {
       <Navbar />
       <Hero />
       <About />
-      <Projects />
+      <Services />
       <Products />
-      <Partners />
+      <Projects />
       <Team />
-      <Resources />
-      <Blog />
+      <Publications />
+      <Partners />
       <Gallery />
       <Footer />
     </div>
