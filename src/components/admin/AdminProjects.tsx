@@ -1,11 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import {
   Table,
   TableBody,
@@ -24,7 +23,7 @@ import {
 import { Pencil, Trash2, Plus } from "lucide-react";
 
 interface Project {
-  id?: number;
+  id?: string;
   title: string;
   description: string;
   image_url: string;
@@ -33,7 +32,22 @@ interface Project {
 
 const AdminProjects = () => {
   const { toast } = useToast();
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([
+    {
+      id: "1",
+      title: "Mangrove Honey Value Chain",
+      description: "Casina Farms has partnered with coastal communities living adjacent to mangrove ecosystems to explore and revolutionize the mangrove honey value chain.",
+      image_url: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      category: "Agriculture"
+    },
+    {
+      id: "2",
+      title: "Casina Farms Mkulima",
+      description: "Casina Farms Mkulima is another transformative project by Casina Farms. We partner with smallholder farmers to enhance food security and promote climate justice.",
+      image_url: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      category: "Community"
+    }
+  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState<Project>({
@@ -43,32 +57,6 @@ const AdminProjects = () => {
     category: ""
   });
   const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      setProjects(data || []);
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-      toast({
-        title: "Error",
-        description: "Could not fetch projects",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -92,45 +80,35 @@ const AdminProjects = () => {
 
     try {
       if (isEditing && currentProject.id) {
-        // Update existing project
-        const { error } = await supabase
-          .from("projects")
-          .update({
-            title: currentProject.title,
-            description: currentProject.description,
-            image_url: currentProject.image_url,
-            category: currentProject.category
-          })
-          .eq("id", currentProject.id);
-
-        if (error) throw error;
-
-        toast({
-          title: "Success",
-          description: "Project updated successfully",
-        });
+        // Simulate update API call
+        setTimeout(() => {
+          setProjects(projects.map(project => 
+            project.id === currentProject.id ? currentProject : project
+          ));
+          
+          toast({
+            title: "Success",
+            description: "Project updated successfully",
+          });
+          
+          resetForm();
+          setIsLoading(false);
+        }, 500);
       } else {
-        // Create new project
-        const { error } = await supabase
-          .from("projects")
-          .insert([{
-            title: currentProject.title,
-            description: currentProject.description,
-            image_url: currentProject.image_url,
-            category: currentProject.category,
-            created_at: new Date().toISOString()
-          }]);
-
-        if (error) throw error;
-
-        toast({
-          title: "Success",
-          description: "Project created successfully",
-        });
+        // Simulate create API call
+        setTimeout(() => {
+          const newId = Math.random().toString(36).substring(2, 9);
+          setProjects([...projects, { ...currentProject, id: newId }]);
+          
+          toast({
+            title: "Success",
+            description: "Project created successfully",
+          });
+          
+          resetForm();
+          setIsLoading(false);
+        }, 500);
       }
-
-      resetForm();
-      fetchProjects();
     } catch (error) {
       console.error("Error saving project:", error);
       toast({
@@ -138,7 +116,6 @@ const AdminProjects = () => {
         description: "Could not save project",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -149,23 +126,22 @@ const AdminProjects = () => {
     setIsDialogOpen(true);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this project?")) return;
 
     setIsLoading(true);
     try {
-      const { error } = await supabase
-        .from("projects")
-        .delete()
-        .eq("id", id);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Project deleted successfully",
-      });
-      fetchProjects();
+      // Simulate delete API call
+      setTimeout(() => {
+        setProjects(projects.filter(project => project.id !== id));
+        
+        toast({
+          title: "Success",
+          description: "Project deleted successfully",
+        });
+        
+        setIsLoading(false);
+      }, 500);
     } catch (error) {
       console.error("Error deleting project:", error);
       toast({
@@ -173,7 +149,6 @@ const AdminProjects = () => {
         description: "Could not delete project",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };

@@ -1,12 +1,7 @@
 
-import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
-
-type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
 interface BlogPostCardProps {
   title: string;
@@ -42,74 +37,7 @@ const BlogPost = ({ title, date, excerpt, image, url }: BlogPostCardProps) => {
 };
 
 const Publications = () => {
-  const [posts, setPosts] = useState<BlogPostCardProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchBlogPosts() {
-      try {
-        const { data, error } = await supabase
-          .from("blog_posts")
-          .select("*")
-          .order("date", { ascending: false });
-
-        if (error) {
-          console.error("Error fetching blog posts:", error);
-          return;
-        }
-
-        if (data) {
-          const formattedPosts = data.map((post) => {
-            // Format the date to a readable string
-            const dateObj = new Date(post.date);
-            const formattedDate = dateObj.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            });
-
-            return {
-              title: post.title,
-              excerpt: post.excerpt,
-              date: formattedDate,
-              image: post.image_url || "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
-              url: post.link || undefined,
-            };
-          });
-          
-          setPosts(formattedPosts);
-        }
-      } catch (error) {
-        console.error("Error in fetchBlogPosts:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchBlogPosts();
-
-    // Subscribe to real-time changes
-    const channel = supabase
-      .channel('schema-db-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'blog_posts'
-        },
-        () => {
-          fetchBlogPosts();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // Fallback content if no blog posts are available yet
+  // Use fallback content for now until database is properly set up
   const fallbackPosts = [
     {
       title: "Sustainable Food Farming in Kenya's Coastal Region",
@@ -131,8 +59,6 @@ const Publications = () => {
     },
   ];
 
-  const displayPosts = posts.length > 0 ? posts : fallbackPosts;
-
   return (
     <section id="publications" className="section-padding bg-farm-cream/50">
       <div className="farm-container">
@@ -144,26 +70,11 @@ const Publications = () => {
           </p>
         </div>
         
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <Card key={item} className="overflow-hidden shadow-md animate-pulse">
-                <div className="h-48 bg-gray-200"></div>
-                <CardContent className="p-6">
-                  <div className="h-4 bg-gray-200 rounded mb-3"></div>
-                  <div className="h-12 bg-gray-200 rounded mb-3"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {displayPosts.map((post, index) => (
-              <BlogPost key={index} {...post} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {fallbackPosts.map((post, index) => (
+            <BlogPost key={index} {...post} />
+          ))}
+        </div>
       </div>
     </section>
   );

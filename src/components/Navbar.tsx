@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -14,11 +16,19 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Detect if the page is scrolled down
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+      
+      // Update active tab based on sections
       const sections = document.querySelectorAll("section[id]");
       
       sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY - 100;
+        const sectionHeight = section.clientHeight;
         const sectionId = section.getAttribute("id") || "";
         
         if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
@@ -43,8 +53,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-farm-beige/90 sticky top-0 z-50 shadow-sm">
-      <div className="farm-container py-4">
+    <nav 
+      ref={navbarRef} 
+      className={`bg-farm-beige/90 sticky top-0 z-50 shadow-sm transition-all duration-300 ${
+        isScrolled ? "py-2 shadow-md" : "py-4"
+      }`}
+    >
+      <div className="farm-container">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">

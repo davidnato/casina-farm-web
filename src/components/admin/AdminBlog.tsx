@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,15 +7,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trash, ExternalLink } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
 
-type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
+interface BlogPost {
+  id?: string;
+  title: string;
+  excerpt: string;
+  image_url?: string;
+  link?: string;
+  date: string;
+}
 
 const AdminBlog = () => {
   const { toast } = useToast();
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [newPost, setNewPost] = useState<Omit<BlogPost, "id" | "created_at" | "updated_at">>({
+  const [posts, setPosts] = useState<BlogPost[]>([
+    {
+      id: "1",
+      title: "Sustainable Food Farming in Kenya's Coastal Region",
+      excerpt: "Discover how Casina Farms is revolutionizing sustainable agriculture practices on Kenya's coast, creating resilient food systems for local communities.",
+      image_url: "https://images.unsplash.com/photo-1466621591366-2d5fba72006d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
+      date: "2023-05-10"
+    },
+    {
+      id: "2",
+      title: "Empowering Local Farmers Through Education",
+      excerpt: "Learn about our recent initiatives to provide agricultural training and resources to smallholder farmers in coastal Kenya.",
+      image_url: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3",
+      date: "2023-06-22"
+    }
+  ]);
+  const [newPost, setNewPost] = useState<Omit<BlogPost, "id">>({
     title: "",
     excerpt: "",
     image_url: "",
@@ -23,59 +43,7 @@ const AdminBlog = () => {
     date: new Date().toISOString().split("T")[0],
   });
   const [loading, setLoading] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
-
-  // Fetch blog posts from Supabase
-  useEffect(() => {
-    async function fetchBlogPosts() {
-      try {
-        const { data, error } = await supabase
-          .from("blog_posts")
-          .select("*")
-          .order("date", { ascending: false });
-
-        if (error) {
-          console.error("Error fetching blog posts:", error);
-          toast({
-            title: "Error",
-            description: "Failed to fetch blog posts. Please try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-
-        if (data) {
-          setPosts(data);
-        }
-      } catch (error) {
-        console.error("Error in fetchBlogPosts:", error);
-      } finally {
-        setIsInitialLoading(false);
-      }
-    }
-
-    fetchBlogPosts();
-
-    // Subscribe to real-time changes
-    const channel = supabase
-      .channel('schema-db-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'blog_posts'
-        },
-        () => {
-          fetchBlogPosts();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [toast]);
+  const [isInitialLoading, setIsInitialLoading] = useState(false);
 
   const handleAddPost = async () => {
     if (!newPost.title || !newPost.excerpt || !newPost.date) {
@@ -90,32 +58,26 @@ const AdminBlog = () => {
     setLoading(true);
     
     try {
-      const { error } = await supabase
-        .from("blog_posts")
-        .insert([newPost]);
-      
-      if (error) {
-        console.error("Error adding blog post:", error);
-        toast({
-          title: "Error",
-          description: "Failed to add blog post. Please try again.",
-          variant: "destructive",
+      // Simulate API call
+      setTimeout(() => {
+        const newId = Math.random().toString(36).substring(2, 9);
+        const postToAdd = { ...newPost, id: newId };
+        setPosts([postToAdd, ...posts]);
+        
+        setNewPost({
+          title: "",
+          excerpt: "",
+          image_url: "",
+          link: "",
+          date: new Date().toISOString().split("T")[0],
         });
-        return;
-      }
-      
-      setNewPost({
-        title: "",
-        excerpt: "",
-        image_url: "",
-        link: "",
-        date: new Date().toISOString().split("T")[0],
-      });
-      
-      toast({
-        title: "Blog post added",
-        description: "New blog post has been added successfully",
-      });
+        
+        toast({
+          title: "Blog post added",
+          description: "New blog post has been added successfully",
+        });
+        setLoading(false);
+      }, 500);
     } catch (error) {
       console.error("Error in handleAddPost:", error);
       toast({
@@ -123,54 +85,31 @@ const AdminBlog = () => {
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
-    } finally {
       setLoading(false);
     }
   };
 
   const handleUpdatePost = async (post: BlogPost) => {
     try {
-      const { error } = await supabase
-        .from("blog_posts")
-        .update({
-          title: post.title,
-          excerpt: post.excerpt,
-          image_url: post.image_url,
-          link: post.link,
-          date: post.date,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", post.id);
-      
-      if (error) {
-        console.error("Error updating blog post:", error);
-        toast({
-          title: "Error",
-          description: "Failed to update blog post. Please try again.",
-          variant: "destructive",
-        });
-      }
+      // Simulate API call
+      toast({
+        title: "Blog post updated",
+        description: "Blog post has been updated successfully",
+      });
     } catch (error) {
       console.error("Error in handleUpdatePost:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update blog post. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
   const handleRemovePost = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from("blog_posts")
-        .delete()
-        .eq("id", id);
-      
-      if (error) {
-        console.error("Error removing blog post:", error);
-        toast({
-          title: "Error",
-          description: "Failed to remove blog post. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
+      // Simulate API call
+      setPosts(posts.filter(post => post.id !== id));
       
       toast({
         title: "Blog post removed",
@@ -178,6 +117,11 @@ const AdminBlog = () => {
       });
     } catch (error) {
       console.error("Error in handleRemovePost:", error);
+      toast({
+        title: "Error",
+        description: "Failed to remove blog post. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -296,7 +240,7 @@ const AdminBlog = () => {
                     variant="destructive"
                     size="icon"
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleRemovePost(post.id)}
+                    onClick={() => post.id && handleRemovePost(post.id)}
                   >
                     <Trash className="h-4 w-4" />
                   </Button>

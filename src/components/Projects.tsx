@@ -1,8 +1,6 @@
 
-import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 
 interface ProjectProps {
   title: string;
@@ -29,63 +27,7 @@ const Project = ({ title, image, description, category }: ProjectProps) => {
 };
 
 const Projects = () => {
-  const [projects, setProjects] = useState<ProjectProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) {
-          console.error("Error fetching projects:", error);
-          return;
-        }
-
-        if (data) {
-          const formattedProjects = data.map((project) => ({
-            title: project.title,
-            description: project.description,
-            image: project.image_url || "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            category: project.category || "Project",
-          }));
-          
-          setProjects(formattedProjects);
-        }
-      } catch (error) {
-        console.error("Error in fetchProjects:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchProjects();
-
-    // Subscribe to real-time changes
-    const channel = supabase
-      .channel('schema-db-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'projects'
-        },
-        () => {
-          fetchProjects();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // Fallback content if no projects are available yet
+  // Fallback content for projects
   const fallbackProjects = [
     {
       title: "Mangrove Honey Value Chain",
@@ -125,8 +67,6 @@ const Projects = () => {
     },
   ];
 
-  const displayProjects = projects.length > 0 ? projects : fallbackProjects;
-
   return (
     <section id="projects" className="section-padding bg-white">
       <div className="farm-container">
@@ -138,25 +78,11 @@ const Projects = () => {
           </p>
         </div>
         
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <Card key={item} className="overflow-hidden shadow-md animate-pulse">
-                <div className="h-48 bg-gray-200"></div>
-                <CardContent className="p-6">
-                  <div className="h-4 bg-gray-200 rounded mb-3"></div>
-                  <div className="h-12 bg-gray-200 rounded"></div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayProjects.map((project, index) => (
-              <Project key={index} {...project} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {fallbackProjects.map((project, index) => (
+            <Project key={index} {...project} />
+          ))}
+        </div>
         
         <div className="text-center mt-10">
           <Button className="btn-secondary" asChild>
