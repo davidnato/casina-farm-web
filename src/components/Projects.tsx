@@ -1,24 +1,35 @@
 
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
-interface ProjectProps {
+interface Project {
+  id: string;
   title: string;
-  image: string;
   description: string;
-  category: string;
+  image_url: string | null;
+  category: string | null;
 }
 
-const Project = ({ title, image, description, category }: ProjectProps) => {
+const Project = ({ title, image_url, description, category }: Project) => {
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 overflow-hidden">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <img 
+          src={image_url || 'https://placehold.co/600x400?text=No+Image'} 
+          alt={title} 
+          className="w-full h-full object-cover" 
+        />
       </div>
       <CardContent className="p-6">
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-xl font-semibold text-farm-earth">{title}</h3>
-          <span className="text-farm-green font-medium bg-farm-beige px-2 py-1 rounded-md text-sm">{category}</span>
+          {category && (
+            <span className="text-farm-green font-medium bg-farm-beige px-2 py-1 rounded-md text-sm">
+              {category}
+            </span>
+          )}
         </div>
         <p className="text-gray-700">{description}</p>
       </CardContent>
@@ -27,45 +38,18 @@ const Project = ({ title, image, description, category }: ProjectProps) => {
 };
 
 const Projects = () => {
-  // Fallback content for projects
-  const fallbackProjects = [
-    {
-      title: "Mangrove Honey Value Chain",
-      image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Casina Farms has partnered with coastal communities living adjacent to mangrove ecosystems to explore and revolutionize the mangrove honey value chain. Our efforts focus on active mangrove restoration and conservation, providing a unique and sustainable source of income for local communities.",
-      category: "Agriculture"
-    },
-    {
-      title: "Casina Farms Mkulima - Innovative Climate-Smart Agriculture",
-      image: "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Casina Farms Mkulima is another transformative project by Casina Farms. We partner with smallholder farmers to enhance food security and promote climate justice through innovative climate-smart agricultural practices.",
-      category: "Community"
-    },
-    {
-      title: "Mangrove Restoration",
-      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Protecting and restoring critical mangrove ecosystems that serve as natural barriers against coastal erosion and climate impacts.",
-      category: "Environment"
-    },
-    {
-      title: "Farmer Training Programs",
-      image: "https://images.unsplash.com/photo-1469041797191-50ace28483c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Educational initiatives to equip local farmers with sustainable farming techniques and climate-resilient agricultural practices.",
-      category: "Education"
-    },
-    {
-      title: "Food Security Network",
-      image: "https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Creating reliable distribution chains to ensure fresh, local produce reaches communities experiencing food insecurity.",
-      category: "Food Systems"
-    },
-    {
-      title: "Youth Agricultural Engagement",
-      image: "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      description: "Programs designed to inspire the next generation of agricultural innovators and environmental stewards.",
-      category: "Education"
-    },
-  ];
+  const { data: projects, isLoading, error } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data as Project[];
+    }
+  });
 
   return (
     <section id="projects" className="section-padding bg-white">
@@ -79,9 +63,35 @@ const Projects = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {fallbackProjects.map((project, index) => (
-            <Project key={index} {...project} />
-          ))}
+          {isLoading ? (
+            [...Array(6)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <div className="h-48 bg-gray-200"></div>
+                <CardContent className="p-6">
+                  <div className="flex justify-between mb-3">
+                    <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-6 bg-gray-200 rounded w-1/4"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : error ? (
+            <div className="col-span-3 text-center text-red-500">
+              Failed to load projects. Please try again later.
+            </div>
+          ) : projects && projects.length > 0 ? (
+            projects.map((project) => (
+              <Project key={project.id} {...project} />
+            ))
+          ) : (
+            <div className="col-span-3 text-center text-gray-500">
+              No projects available at the moment.
+            </div>
+          )}
         </div>
         
         <div className="text-center mt-10">
