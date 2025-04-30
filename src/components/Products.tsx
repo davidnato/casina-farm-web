@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface ProductProps {
   name: string;
@@ -20,7 +21,9 @@ const ProductCard = ({ name, description, image, price }: ProductProps) => {
           <span className="bg-farm-beige px-2 py-1 rounded text-farm-green font-medium">{price}</span>
         </div>
         <p className="text-gray-600 mb-4">{description}</p>
-        <Button className="btn-primary w-full">Add to Cart</Button>
+        <Button asChild className="btn-primary w-full">
+          <Link to="/order">Add to Cart</Link>
+        </Button>
       </div>
     </div>
   );
@@ -72,7 +75,9 @@ const Products = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Button className="btn-secondary">View All Products</Button>
+          <Button asChild className="btn-secondary">
+            <Link to="/products">View All Products</Link>
+          </Button>
         </div>
       </div>
     </section>

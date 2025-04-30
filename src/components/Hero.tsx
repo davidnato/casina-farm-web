@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const heroImages = [
@@ -38,8 +39,15 @@ const Hero = () => {
             <p className="text-lg md:text-xl text-farm-earth">Scaling a Model for Food Security and Fairness</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button className="btn-primary">Learn More</Button>
-            <Button className="btn-secondary" onClick={() => window.open("https://maps.app.goo.gl/VrsNFwgxX8KoC1G89", "_blank")}>Visit Us</Button>
+            <Button asChild className="btn-primary">
+              <Link to="/about">Learn More</Link>
+            </Button>
+            <Button 
+              className="btn-secondary" 
+              onClick={() => window.open("https://maps.app.goo.gl/VrsNFwgxX8KoC1G89", "_blank")}
+            >
+              Visit Us
+            </Button>
           </div>
         </div>
       </div>

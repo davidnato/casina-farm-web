@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Download, BookOpen, FileImage, PieChart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ResourceProps {
   title: string;
@@ -92,7 +93,9 @@ const Resources = () => {
         </div>
         
         <div className="text-center mt-10">
-          <Button className="btn-secondary">Browse All Resources</Button>
+          <Button asChild className="btn-secondary">
+            <Link to="/resources">Browse All Resources</Link>
+          </Button>
         </div>
       </div>
     </section>

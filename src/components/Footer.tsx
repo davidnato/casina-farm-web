@@ -1,8 +1,24 @@
 
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
+import { toast } from "sonner";
+import { useState } from 'react';
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
+    
+    toast.success("Thank you for subscribing to our newsletter!");
+    setEmail("");
+  };
+
   return (
     <footer className="bg-farm-green text-white">
       <div className="farm-container py-12">
@@ -10,11 +26,13 @@ const Footer = () => {
           {/* About */}
           <div className="md:col-span-1">
             <div className="flex items-center mb-4">
-              <img 
-                src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
-                alt="Casina Farms Logo" 
-                className="h-12 w-auto mr-3"
-              />
+              <Link to="/">
+                <img 
+                  src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
+                  alt="Casina Farms Logo" 
+                  className="h-12 w-auto mr-3"
+                />
+              </Link>
             </div>
             <p className="mb-6 text-sm opacity-80">
               Casina Farms is a pioneering social enterprise dedicated to sustainable agriculture, 
@@ -27,22 +45,22 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#about" className="hover:text-farm-beige transition-colors">Our Story</a>
+                <Link to="/#about" className="hover:text-farm-beige transition-colors">Our Story</Link>
               </li>
               <li>
-                <a href="#projects" className="hover:text-farm-beige transition-colors">Projects</a>
+                <Link to="/projects" className="hover:text-farm-beige transition-colors">Projects</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-farm-beige transition-colors">Products</a>
+                <Link to="/products" className="hover:text-farm-beige transition-colors">Products</Link>
               </li>
               <li>
-                <a href="#team" className="hover:text-farm-beige transition-colors">Our Team</a>
+                <Link to="/#team" className="hover:text-farm-beige transition-colors">Our Team</Link>
               </li>
               <li>
-                <a href="#resources" className="hover:text-farm-beige transition-colors">Resources</a>
+                <Link to="/resources" className="hover:text-farm-beige transition-colors">Resources</Link>
               </li>
               <li>
-                <a href="#blog" className="hover:text-farm-beige transition-colors">Blog</a>
+                <Link to="/blog" className="hover:text-farm-beige transition-colors">Blog</Link>
               </li>
             </ul>
           </div>
@@ -65,13 +83,13 @@ const Footer = () => {
               </li>
             </ul>
             <div className="flex space-x-3 mt-4">
-              <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <Facebook size={18} />
               </a>
-              <a href="https://www.instagram.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <Instagram size={18} />
               </a>
-              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter">
+              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                 <Twitter size={18} />
               </a>
             </div>
@@ -83,11 +101,13 @@ const Footer = () => {
             <p className="mb-4 text-sm">
               Subscribe for updates on our latest projects and initiatives.
             </p>
-            <form className="space-y-2">
+            <form className="space-y-2" onSubmit={handleSubscribe}>
               <input 
                 type="email" 
                 placeholder="Your email" 
                 className="px-3 py-2 rounded-md w-full text-gray-800 text-sm focus:outline-none"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Button 
                 type="submit" 
@@ -105,8 +125,8 @@ const Footer = () => {
         <div className="farm-container flex flex-col md:flex-row justify-between items-center text-sm">
           <p>&copy; {new Date().getFullYear()} Casina Farms. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 md:mt-0">
-            <a href="#" className="hover:text-farm-beige transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-farm-beige transition-colors">Terms of Use</a>
+            <a href="/privacy-policy" className="hover:text-farm-beige transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-farm-beige transition-colors">Terms of Use</a>
           </div>
         </div>
       </div>

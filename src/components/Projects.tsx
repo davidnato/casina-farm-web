@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Project {
@@ -95,8 +96,8 @@ const Projects = () => {
         </div>
         
         <div className="text-center mt-10">
-          <Button className="btn-secondary" asChild>
-            <a href="/projects">View All Projects</a>
+          <Button asChild className="btn-secondary">
+            <Link to="/projects">View All Projects</Link>
           </Button>
         </div>
       </div>

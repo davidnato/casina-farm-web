@@ -2,6 +2,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -27,7 +29,7 @@ const BlogPost = ({ title, date, excerpt, image_url, link }: BlogPost) => {
         <p className="text-sm text-farm-green font-medium mb-2">{date}</p>
         <h3 className="text-xl font-semibold text-farm-earth mb-2">{title}</h3>
         <p className="text-gray-700 mb-4 line-clamp-3">{excerpt}</p>
-        {link && (
+        {link ? (
           <a 
             href={link}
             target="_blank"
@@ -36,6 +38,13 @@ const BlogPost = ({ title, date, excerpt, image_url, link }: BlogPost) => {
           >
             Read More <ExternalLink size={16} className="ml-1" />
           </a>
+        ) : (
+          <Link 
+            to="/blog"
+            className="inline-flex items-center text-farm-brown hover:text-farm-green transition-colors"
+          >
+            Read More <ExternalLink size={16} className="ml-1" />
+          </Link>
         )}
       </CardContent>
     </Card>
@@ -95,6 +104,12 @@ const Publications = () => {
               No publications available at the moment.
             </div>
           )}
+        </div>
+
+        <div className="text-center mt-10">
+          <Button asChild className="btn-secondary">
+            <Link to="/blog">View All Publications</Link>
+          </Button>
         </div>
       </div>
     </section>
