@@ -23,35 +23,28 @@ const Navbar = () => {
       } else {
         setIsScrolled(false);
       }
-      
-      // Update active tab based on sections on home page
-      if (location.pathname === '/') {
-        const sections = document.querySelectorAll("section[id]");
-        
-        sections.forEach((section) => {
-          const sectionTop = section.getBoundingClientRect().top + window.scrollY - 100;
-          const sectionHeight = section.clientHeight;
-          const sectionId = section.getAttribute("id") || "";
-          
-          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-            setActiveTab(sectionId);
-          }
-        });
-      } else {
-        // Set active tab based on current route
-        const path = location.pathname.substring(1); // Remove leading slash
-        setActiveTab(path || "home");
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Call once to set initial state
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  // Set active tab based on current route
+  useEffect(() => {
+    const path = location.pathname.substring(1); // Remove leading slash
+    if (location.pathname === '/') {
+      setActiveTab('home');
+    } else if (location.pathname.startsWith('/blog')) {
+      setActiveTab('publications');
+    } else {
+      setActiveTab(path || 'home');
+    }
   }, [location.pathname]);
 
   const navItems = [
     { id: "home", label: "Home", href: "/" },
-    { id: "about", label: "About", href: "/#about" },
+    { id: "about", label: "About", href: "/about" },
     { id: "services", label: "Services", href: "/#services" },
     { id: "products", label: "Products", href: "/products" },
     { id: "projects", label: "Projects", href: "/projects" },
@@ -83,10 +76,7 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => {
-              const isActive = 
-                (item.id === activeTab) || 
-                (item.id === "home" && location.pathname === "/") ||
-                (item.href.includes(activeTab) && activeTab !== "home");
+              const isActive = activeTab === item.id;
                 
               return (
                 <Link 
