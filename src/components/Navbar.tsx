@@ -27,7 +27,7 @@ const Navbar = () => {
       
       // Update active tab based on sections on home page when on the homepage
       if (location.pathname === '/') {
-        const sections = document.querySelectorAll("section[id]");
+        const sections = document.querySelectorAll("[id]");
         let currentSection = "home";
         
         sections.forEach((section) => {
@@ -57,7 +57,7 @@ const Navbar = () => {
     if (location.pathname === '/') {
       // On homepage, let the scroll handler manage the active tab
       const handleInitialSectionHighlight = () => {
-        const sections = document.querySelectorAll("section[id]");
+        const sections = document.querySelectorAll("[id]");
         if (sections.length > 0) {
           const firstVisible = Array.from(sections).find(section => {
             const rect = section.getBoundingClientRect();
@@ -86,7 +86,8 @@ const Navbar = () => {
   // Smooth scroll to section when clicking on a hash link
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
-      return; // Don't handle scrolling if not on homepage
+      window.location.href = `/#${sectionId}`;
+      return;
     }
     
     setIsMenuOpen(false); // Close mobile menu
@@ -140,7 +141,7 @@ const Navbar = () => {
               return (
                 <Link 
                   key={item.id}
-                  to={item.href}
+                  to={isHashLink ? "/" : item.href}
                   onClick={(e) => {
                     if (isHashLink) {
                       e.preventDefault();
@@ -191,7 +192,7 @@ const Navbar = () => {
                 return (
                   <Link 
                     key={item.id}
-                    to={item.href}
+                    to={isHashLink ? "/" : item.href}
                     onClick={(e) => {
                       if (isHashLink) {
                         e.preventDefault();

@@ -11,19 +11,31 @@ const Hero = () => {
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+      // Start the transition effect
+      setIsTransitioning(true);
+      
+      // After fade out, change the image
+      setTimeout(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+        // Then fade in the new image
+        setIsTransitioning(false);
+      }, 500); // Half of the transition duration for a smooth experience
+      
     }, 5000);
     
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative bg-farm-beige overflow-hidden">
+    <section id="home" className="relative bg-farm-beige overflow-hidden">
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-20 transition-opacity duration-1000"
+        className={`absolute inset-0 z-0 bg-cover bg-center transition-opacity duration-1000 ${
+          isTransitioning ? "opacity-0" : "opacity-20"
+        }`}
         style={{ 
           backgroundImage: `url('${heroImages[currentImageIndex]}')` 
         }}
