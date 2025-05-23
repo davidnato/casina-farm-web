@@ -36,22 +36,28 @@ const Team = () => {
       bio: "Levis Sirikwa is the visionary Founder and Managing Director of Casina Farms. With a strong background in Aquaculture and Marine Ecology, he brings deep scientific expertise and a passion for sustainable farming to every aspect of the business. Under his leadership, Casina Farms is pioneering innovative, eco-friendly approaches to aquaculture, helping to shape a more resilient and responsible food system."
     },
     {
-      name: "David Chen",
-      role: "Beekeeper",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-      bio: "David manages our bee colonies with care and expertise, ensuring our honey production is of the highest quality while supporting local pollinators."
+      name: "Zipporah",
+      role: "Field Operation Manager",
+      image: "/lovable-uploads/ziporrah.jpg",
+      bio: "Zipporah is currently a Senior  Nature Based solutions Manager at Clime Trek Limited Company where she oversees all the technical aspects of the NBS projects, Support partners in the successful implementation of NBS projects throughout the portfolio, Identifies and develop opportunities for partnerships and collaboration with relevant organizations, Plans and conducts stakeholder engagement activities and manages all NBS projects.Before Joining Clime Trek, zipporah worked at Infinite solutions as NBS manager where she was responsible for managing a team and designing project models for the company. Previous to her work at Infinite Zipporah worked as Lead Community engagement officer at Ceriops Environmental organization, where she supported the company in planning for community events, organizing for Capacity building programs, resource mobilization, high level stakeholder engagement and organized active mangrove restoration activities. Zipporah also spent one year with Base Titanium Limited as an Environmental consultant, where she Provided consultancy services for Bases Environmental Programmes for the purpose of assisting with.  Indigenous tree propagation documentation, restoration activities documentation, wetland healthy assessment documentation, preparation of tree nursery education modules for the community groups"
     },
     {
-      name: "Sarah Williams",
-      role: "Agricultural Specialist",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-      bio: "With a degree in agriculture, Sarah oversees our sustainable farming practices, crop rotation, and soil health management."
+      name: "Charles Nzovu",
+      role: "Beekeper",
+      image: "/lovable-uploads/charles.jpg",
+      bio: "Levis Sirikwa is the visionary Founder and Managing Director of Casina Farms. With a strong background in Aquaculture and Marine Ecology, he brings deep scientific expertise and a passion for sustainable farming to every aspect of the business. Under his leadership, Casina Farms is pioneering innovative, eco-friendly approaches to aquaculture, helping to shape a more resilient and responsible food system."
     },
     {
-      name: "Michael Thompson",
-      role: "Sales Manager",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-      bio: "Michael handles our customer relationships and ensures our products reach local markets, restaurants, and community members."
+      name: "Rejean Marie Darroca",
+      role: "Branding Manager",
+      image: "/lovable-uploads/rajean.jpg",
+      bio: "Rejean is the creative force behind the Casina Farms brand. With a background in food technology and a sharp eye for design, she brings science and storytelling together to make sure everything we do looks as good as it tastes. From packaging to campaigns, Rejean ensures our values shine through in every detail."
+    },
+    {
+      name: "Justin Manya",
+      role: "IT Director",
+      image: "/lovable-uploads/justin.jpg",
+      bio: "Driving digital innovation through artificial intelligence, machine learning, and data-driven solutions. He leads the development of smart agricultural systems that boost efficiency, sustainability, and decision-making across the farm’s operations."
     },
   ];
 
