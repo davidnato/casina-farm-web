@@ -30,10 +30,10 @@ const TeamMember = ({ name, role, image, bio }: TeamMemberProps) => {
 const Team = () => {
   const teamMembers = [
     {
-      name: "Maria Johnson",
-      role: "Farm Owner",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      bio: "Maria founded Casina Farm with a vision to create sustainable, organic farming practices while providing the community with healthy food options."
+      name: "Levis Sikwa",
+      role: "Founder and Managing Director",
+      image: "/lovable-uploads/levis.jpg",
+      bio: "Levis Sirikwa is the visionary Founder and Managing Director of Casina Farms. With a strong background in Aquaculture and Marine Ecology, he brings deep scientific expertise and a passion for sustainable farming to every aspect of the business. Under his leadership, Casina Farms is pioneering innovative, eco-friendly approaches to aquaculture, helping to shape a more resilient and responsible food system."
     },
     {
       name: "David Chen",
