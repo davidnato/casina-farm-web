@@ -1,11 +1,13 @@
 
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
 
 interface TeamMemberProps {
   name: string;
   role: string;
-  image: string;
+  image: string | null;
   bio: string;
 }
 
@@ -14,7 +16,7 @@ const TeamMember = ({ name, role, image, bio }: TeamMemberProps) => {
     <Card className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardContent className="p-6 text-center">
         <Avatar className="h-24 w-24 mx-auto mb-4 border-2 border-farm-green">
-          <AvatarImage src={image} alt={name} />
+          <AvatarImage src={image || undefined} alt={name} />
           <AvatarFallback className="bg-farm-beige text-farm-earth text-xl">
             {name.split(" ").map(n => n[0]).join("")}
           </AvatarFallback>
@@ -28,38 +30,53 @@ const TeamMember = ({ name, role, image, bio }: TeamMemberProps) => {
 };
 
 const Team = () => {
-  const teamMembers = [
-    {
-      name: "Levis Sikwa",
-      role: "Founder and Managing Director",
-      image: "/lovable-uploads/levis.jpg",
-      bio: "Levis Sirikwa is the visionary Founder and Managing Director of Casina Farms. With a strong background in Aquaculture and Marine Ecology, he brings deep scientific expertise and a passion for sustainable farming to every aspect of the business. Under his leadership, Casina Farms is pioneering innovative, eco-friendly approaches to aquaculture, helping to shape a more resilient and responsible food system."
-    },
-    {
-      name: "Zipporah",
-      role: "Field Operation Manager",
-      image: "/lovable-uploads/ziporrah.jpg",
-      bio: "Zipporah is currently a Senior  Nature Based solutions Manager at Clime Trek Limited Company where she oversees all the technical aspects of the NBS projects, Support partners in the successful implementation of NBS projects throughout the portfolio, Identifies and develop opportunities for partnerships and collaboration with relevant organizations, Plans and conducts stakeholder engagement activities and manages all NBS projects."
-    },
-    {
-      name: "Charles Nzovu",
-      role: "Beekeper",
-      image: "/lovable-uploads/charles.jpg",
-      bio: "Levis Sirikwa is the visionary Founder and Managing Director of Casina Farms. With a strong background in Aquaculture and Marine Ecology, he brings deep scientific expertise and a passion for sustainable farming to every aspect of the business. Under his leadership, Casina Farms is pioneering innovative, eco-friendly approaches to aquaculture, helping to shape a more resilient and responsible food system."
-    },
-    {
-      name: "Rejean Marie Darroca",
-      role: "Branding Manager",
-      image: "/lovable-uploads/rajean.jpg",
-      bio: "Rejean is the creative force behind the Casina Farms brand. With a background in food technology and a sharp eye for design, she brings science and storytelling together to make sure everything we do looks as good as it tastes. From packaging to campaigns, Rejean ensures our values shine through in every detail."
-    },
-    {
-      name: "Justin Manya",
-      role: "IT Director",
-      image: "/lovable-uploads/justin.jpg",
-      bio: "Driving digital innovation through artificial intelligence, machine learning, and data-driven solutions. He leads the development of smart agricultural systems that boost efficiency, sustainability, and decision-making across the farm’s operations."
-    },
-  ];
+  const [teamMembers, setTeamMembers] = useState<TeamMemberProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('team_members')
+          .select('name, role, bio, image_url')
+          .order('display_order', { ascending: true });
+
+        if (error) {
+          console.error('Error fetching team members:', error);
+          return;
+        }
+
+        const formattedMembers = data.map(member => ({
+          name: member.name,
+          role: member.role,
+          image: member.image_url,
+          bio: member.bio
+        }));
+
+        setTeamMembers(formattedMembers);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="team" className="section-padding bg-farm-cream/50">
+        <div className="farm-container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Meet Our Team</h2>
+            <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
+            <p className="max-w-2xl mx-auto text-gray-700">Loading team members...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="team" className="section-padding bg-farm-cream/50">

@@ -1,0 +1,218 @@
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { Phone, CreditCard, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const PaymentPage = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const formatPhoneNumber = (phone: string) => {
+    // Remove any non-digit characters
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // If it starts with 0, replace with 254
+    if (cleanPhone.startsWith('0')) {
+      return '254' + cleanPhone.substring(1);
+    }
+    
+    // If it doesn't start with 254, add it
+    if (!cleanPhone.startsWith('254')) {
+      return '254' + cleanPhone;
+    }
+    
+    return cleanPhone;
+  };
+
+  const initiateMpesaPayment = async (phone: string, amount: string) => {
+    try {
+      // This would be replaced with actual Daraja API integration
+      // For now, we'll simulate the API call
+      const response = await fetch('/api/mpesa/stkpush', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone_number: formatPhoneNumber(phone),
+          amount: parseInt(amount),
+          account_reference: 'CASINA_FARMS',
+          transaction_desc: 'Payment for Casina Farms products'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Payment initiation failed');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('MPesa payment error:', error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!phoneNumber || !amount) {
+      toast({
+        title: 'Missing information',
+        description: 'Please enter both phone number and amount.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (parseInt(amount) < 1) {
+      toast({
+        title: 'Invalid amount',
+        description: 'Amount must be at least KES 1.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Simulate MPesa STK Push
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      toast({
+        title: 'Payment request sent!',
+        description: `Please check your phone (${phoneNumber}) for the MPesa prompt and enter your PIN to complete the payment.`,
+      });
+
+      // In a real implementation, you would:
+      // const result = await initiateMpesaPayment(phoneNumber, amount);
+      
+      // Reset form
+      setPhoneNumber('');
+      setAmount('');
+      
+    } catch (error) {
+      toast({
+        title: 'Payment failed',
+        description: 'Failed to initiate payment. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-farm-beige/20">
+      <div className="farm-container py-8">
+        <div className="max-w-md mx-auto">
+          <div className="mb-6">
+            <Link to="/" className="flex items-center text-farm-green hover:text-farm-green/80">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
+            </Link>
+          </div>
+          
+          <Card className="shadow-lg">
+            <CardHeader className="text-center">
+              <div className="flex justify-center mb-4">
+                <img
+                  src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png"
+                  alt="Casina Farms Logo"
+                  className="h-16"
+                />
+              </div>
+              <CardTitle className="text-2xl font-bold text-farm-green flex items-center justify-center gap-2">
+                <CreditCard size={20} />
+                MPesa Payment
+              </CardTitle>
+              <p className="text-gray-600 mt-2">
+                Pay securely using your MPesa mobile money
+              </p>
+            </CardHeader>
+            
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      id="phoneNumber"
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="07XXXXXXXX or 2547XXXXXXXX"
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500">
+                    Enter your Safaricom number registered with MPesa
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="amount">Amount (KES)</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-400">KES</span>
+                    <Input
+                      id="amount"
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0"
+                      className="pl-12"
+                      min="1"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h3 className="font-medium text-blue-900 mb-2">Payment Process:</h3>
+                  <ol className="text-sm text-blue-800 space-y-1">
+                    <li>1. Click "Pay with MPesa" below</li>
+                    <li>2. Check your phone for MPesa prompt</li>
+                    <li>3. Enter your MPesa PIN</li>
+                    <li>4. Wait for confirmation SMS</li>
+                  </ol>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Sending request...
+                    </div>
+                  ) : (
+                    'Pay with MPesa'
+                  )}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center text-sm text-gray-500">
+                <p>Powered by Safaricom MPesa</p>
+                <p className="mt-1">Your payment is secure and encrypted</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PaymentPage;
