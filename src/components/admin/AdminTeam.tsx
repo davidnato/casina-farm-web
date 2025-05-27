@@ -54,6 +54,23 @@ const AdminTeam = () => {
 
   useEffect(() => {
     fetchTeamMembers();
+    // Update Justin to Jastin if exists
+    const updateJustinName = async () => {
+      try {
+        const { error } = await supabase
+          .from('team_members')
+          .update({ name: 'Jastin Manya' })
+          .eq('name', 'Justin Manya');
+        
+        if (error) {
+          console.error('Error updating team member name:', error);
+        }
+      } catch (error) {
+        console.error('Error updating team member name:', error);
+      }
+    };
+    
+    updateJustinName();
   }, []);
 
   const handleSave = async () => {

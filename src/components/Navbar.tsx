@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Lock, LogIn, LogOut, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -88,6 +87,7 @@ const Navbar = () => {
   // Smooth scroll to section when clicking on a hash link
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
+      // Navigate to home page with hash
       window.location.href = `/#${sectionId}`;
       return;
     }
@@ -96,7 +96,11 @@ const Navbar = () => {
     
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offsetTop = element.offsetTop - 80; // Account for navbar height
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
       setActiveTab(sectionId); // Update active tab immediately
     }
   };
@@ -107,14 +111,14 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { id: "home", label: "Home", href: "/" },
-    { id: "about", label: "About", href: "/about" },
-    { id: "services", label: "Services", href: "/#services" },
-    { id: "products", label: "Products", href: "/products" },
-    { id: "projects", label: "Projects", href: "/projects" },
-    { id: "team", label: "Team", href: "/#team" },
-    { id: "publications", label: "Publications", href: "/blog" },
-    { id: "contact", label: "Contact", href: "/contact" },
+    { id: "home", label: "Home", href: "/", isSection: false },
+    { id: "about", label: "About", href: "/about", isSection: false },
+    { id: "services", label: "Services", href: "#services", isSection: true },
+    { id: "products", label: "Products", href: "#products", isSection: true },
+    { id: "projects", label: "Projects", href: "#projects", isSection: true },
+    { id: "team", label: "Team", href: "#team", isSection: true },
+    { id: "publications", label: "Publications", href: "/blog", isSection: false },
+    { id: "contact", label: "Contact", href: "/contact", isSection: false },
   ];
 
   return (
@@ -128,7 +132,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center" onClick={() => scrollToSection('home')}>
               <img 
                 src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
                 alt="Casina Farms Logo" 
@@ -140,31 +144,41 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => {
-              // Check if this is a hash link (section on homepage)
-              const isHashLink = item.href.includes('#');
               const isActive = activeTab === item.id;
               
-              // For hash links, we use onClick to scroll to that section
-              return (
-                <Link 
-                  key={item.id}
-                  to={isHashLink ? "/" : item.href}
-                  onClick={(e) => {
-                    if (isHashLink) {
-                      e.preventDefault();
-                      scrollToSection(item.id);
-                    }
-                  }}
-                  className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
-                    isActive ? "text-farm-green font-semibold" : ""
-                  }`}
-                >
-                  {item.label}
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
-                  )}
-                </Link>
-              );
+              if (item.isSection) {
+                // For section links, use onClick to scroll
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
+                      isActive ? "text-farm-green font-semibold" : ""
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
+                    )}
+                  </button>
+                );
+              } else {
+                // For regular page links, use Link component
+                return (
+                  <Link 
+                    key={item.id}
+                    to={item.href}
+                    className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
+                      isActive ? "text-farm-green font-semibold" : ""
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
+                    )}
+                  </Link>
+                );
+              }
             })}
             
             <Button asChild className="btn-primary">
@@ -222,27 +236,32 @@ const Navbar = () => {
           <div className="md:hidden mt-4 pb-4">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => {
-                const isHashLink = item.href.includes('#');
-                
-                return (
-                  <Link 
-                    key={item.id}
-                    to={isHashLink ? "/" : item.href}
-                    onClick={(e) => {
-                      if (isHashLink) {
-                        e.preventDefault();
-                        scrollToSection(item.id);
-                      } else {
-                        setIsMenuOpen(false);
-                      }
-                    }}
-                    className={`text-farm-earth hover:text-farm-green font-medium ${
-                      activeTab === item.id ? "text-farm-green font-semibold" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
+                if (item.isSection) {
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`text-farm-earth hover:text-farm-green font-medium text-left ${
+                        activeTab === item.id ? "text-farm-green font-semibold" : ""
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                } else {
+                  return (
+                    <Link 
+                      key={item.id}
+                      to={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`text-farm-earth hover:text-farm-green font-medium ${
+                        activeTab === item.id ? "text-farm-green font-semibold" : ""
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
               })}
               <Button asChild className="btn-primary w-full mt-2">
                 <Link to="/payment" onClick={() => setIsMenuOpen(false)}>Order Now</Link>

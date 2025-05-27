@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, CreditCard, ArrowLeft } from 'lucide-react';
+import { Phone, CreditCard, ArrowLeft, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PaymentPage = () => {
@@ -13,6 +13,9 @@ const PaymentPage = () => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  const tillNumber = "5677581";
+  const businessName = "CASINA FARMS";
 
   const formatPhoneNumber = (phone: string) => {
     // Remove any non-digit characters
@@ -31,33 +34,12 @@ const PaymentPage = () => {
     return cleanPhone;
   };
 
-  const initiateMpesaPayment = async (phone: string, amount: string) => {
-    try {
-      // This would be replaced with actual Daraja API integration
-      // For now, we'll simulate the API call
-      const response = await fetch('/api/mpesa/stkpush', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phone_number: formatPhoneNumber(phone),
-          amount: parseInt(amount),
-          account_reference: 'CASINA_FARMS',
-          transaction_desc: 'Payment for Casina Farms products'
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Payment initiation failed');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('MPesa payment error:', error);
-      throw error;
-    }
+  const copyTillNumber = () => {
+    navigator.clipboard.writeText(tillNumber);
+    toast({
+      title: 'Copied!',
+      description: 'Till number copied to clipboard',
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,25 +66,22 @@ const PaymentPage = () => {
     setLoading(true);
 
     try {
-      // Simulate MPesa STK Push
+      // Simulate payment process
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       toast({
-        title: 'Payment request sent!',
-        description: `Please check your phone (${phoneNumber}) for the MPesa prompt and enter your PIN to complete the payment.`,
+        title: 'Payment instructions sent!',
+        description: `Please use the till number ${tillNumber} to complete your payment via MPesa.`,
       });
 
-      // In a real implementation, you would:
-      // const result = await initiateMpesaPayment(phoneNumber, amount);
-      
       // Reset form
       setPhoneNumber('');
       setAmount('');
       
     } catch (error) {
       toast({
-        title: 'Payment failed',
-        description: 'Failed to initiate payment. Please try again.',
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -135,14 +114,43 @@ const PaymentPage = () => {
                 MPesa Payment
               </CardTitle>
               <p className="text-gray-600 mt-2">
-                Pay securely using your MPesa mobile money
+                Pay securely using MPesa Buy Goods
               </p>
             </CardHeader>
             
             <CardContent>
+              {/* Till Number Display */}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                <h3 className="font-semibold text-green-900 mb-2">Payment Instructions:</h3>
+                <div className="space-y-2 text-sm text-green-800">
+                  <p>1. Go to MPesa on your phone</p>
+                  <p>2. Select "Lipa na M-Pesa"</p>
+                  <p>3. Select "Buy Goods and Services"</p>
+                  <p>4. Enter Till Number: <strong>{tillNumber}</strong></p>
+                  <p>5. Enter amount and your MPesa PIN</p>
+                </div>
+                <div className="mt-4 p-3 bg-white rounded border">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-gray-900">{businessName}</p>
+                      <p className="text-lg font-bold text-green-600">Till No: {tillNumber}</p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={copyTillNumber}
+                      className="flex items-center gap-1"
+                    >
+                      <Copy size={14} />
+                      Copy
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <Label htmlFor="phoneNumber">Your Phone Number (Optional)</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                     <Input
@@ -152,11 +160,10 @@ const PaymentPage = () => {
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       placeholder="07XXXXXXXX or 2547XXXXXXXX"
                       className="pl-10"
-                      required
                     />
                   </div>
                   <p className="text-sm text-gray-500">
-                    Enter your Safaricom number registered with MPesa
+                    For order confirmation (optional)
                   </p>
                 </div>
 
@@ -177,16 +184,6 @@ const PaymentPage = () => {
                   </div>
                 </div>
 
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-blue-900 mb-2">Payment Process:</h3>
-                  <ol className="text-sm text-blue-800 space-y-1">
-                    <li>1. Click "Pay with MPesa" below</li>
-                    <li>2. Check your phone for MPesa prompt</li>
-                    <li>3. Enter your MPesa PIN</li>
-                    <li>4. Wait for confirmation SMS</li>
-                  </ol>
-                </div>
-
                 <Button
                   type="submit"
                   className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
@@ -195,10 +192,10 @@ const PaymentPage = () => {
                   {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Sending request...
+                      Processing...
                     </div>
                   ) : (
-                    'Pay with MPesa'
+                    'Get Payment Instructions'
                   )}
                 </Button>
               </form>

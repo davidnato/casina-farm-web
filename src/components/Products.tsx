@@ -7,9 +7,10 @@ interface ProductProps {
   description: string;
   image: string;
   price: string;
+  category: string;
 }
 
-const ProductCard = ({ name, description, image, price }: ProductProps) => {
+const ProductCard = ({ name, description, image, price, category }: ProductProps) => {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 overflow-hidden">
@@ -18,12 +19,15 @@ const ProductCard = ({ name, description, image, price }: ProductProps) => {
       <div className="p-6">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-xl font-semibold text-farm-earth">{name}</h3>
-          <span className="bg-farm-beige px-2 py-1 rounded text-farm-green font-medium">{price}</span>
+          <span className="bg-farm-beige px-2 py-1 rounded text-farm-green font-medium text-sm">{category}</span>
         </div>
-        <p className="text-gray-600 mb-4">{description}</p>
-        <Button asChild className="btn-primary w-full">
-          <Link to="/order">Add to Cart</Link>
-        </Button>
+        <p className="text-gray-600 mb-4 text-sm">{description}</p>
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-bold text-farm-green">{price}</span>
+          <Button asChild className="btn-primary">
+            <Link to="/payment">Order Now</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -32,28 +36,39 @@ const ProductCard = ({ name, description, image, price }: ProductProps) => {
 const Products = () => {
   const products = [
     {
-      name: "1L Mangrove Honey",
-      description: "A seasonal selection of our freshest organic vegetables, harvested daily from our fields.",
+      name: "Mangrove Honey",
+      description: "Premium honey from mangrove ecosystems. Available in 380g (Ksh. 500), 660g (Ksh. 1000), and 1kg (Ksh. 1500).",
       image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
-      price: "$25.00"
+      price: "From Ksh. 500",
+      category: "Honey"
     },
     {
-      name: "380ml Mangrove Honey",
-      description: "Farm-fresh eggs from our happy, free-range chickens fed with organic feed.",
+      name: "Terrestrial Honey",
+      description: "Pure honey from terrestrial sources. Available in 380g (Ksh. 400), 660g (Ksh. 700), and 1kg (Ksh. 1000).",
       image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
-      price: "$6.50"
+      price: "From Ksh. 400",
+      category: "Honey"
     },
     {
-      name: "100ml Mangrove Honey",
-      description: "Handcrafted goat cheese made from the milk of our own goats, aged to perfection.",
+      name: "Hibiscus Dried Petals",
+      description: "Premium dried hibiscus petals perfect for teas and natural remedies. Rich in antioxidants and nutrients.",
       image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
-      price: "$8.75"
+      price: "Ksh. 550",
+      category: "Natural Products"
     },
     {
-      name: "Customize a Package",
-      description: "Pure, raw honey collected from our own beehives located in our flowering meadows.",
+      name: "Seaweed Hair Care",
+      description: "Natural seaweed-based hair products including shampoo (Ksh. 400), hair food (Ksh. 300), and more.",
       image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
-      price: "$12.00"
+      price: "From Ksh. 300",
+      category: "Seaweed Products"
+    },
+    {
+      name: "Seaweed Body Care",
+      description: "Premium seaweed body care products including shower gel (Ksh. 400), body lotion (Ksh. 350), and bar soap (Ksh. 250).",
+      image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
+      price: "From Ksh. 250",
+      category: "Seaweed Products"
     },
   ];
 
@@ -64,11 +79,11 @@ const Products = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Our Products</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-gray-700">
-            All our products are grown and made with care on our farm, following sustainable practices and traditional methods.
+            All our products are sustainably produced and carefully crafted to bring you the best of nature's bounty.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => (
             <ProductCard key={index} {...product} />
           ))}
