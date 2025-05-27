@@ -1,7 +1,8 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Lock, LogIn, LogOut, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, isAdmin, signOut, loading } = useAuth();
 
   const toggleMenu = () => {
@@ -26,7 +28,7 @@ const Navbar = () => {
         setIsScrolled(false);
       }
       
-      // Update active tab based on sections on home page when on the homepage
+      // Update active tab based on sections when on the homepage
       if (location.pathname === '/') {
         const sections = document.querySelectorAll("[id]");
         let currentSection = "home";
@@ -52,9 +54,6 @@ const Navbar = () => {
   
   // Set active tab based on current route
   useEffect(() => {
-    // Only update the active tab when we navigate to a new page, not when scrolling
-    const path = location.pathname.substring(1); // Remove leading slash
-    
     if (location.pathname === '/') {
       // On homepage, let the scroll handler manage the active tab
       const handleInitialSectionHighlight = () => {
@@ -77,31 +76,40 @@ const Navbar = () => {
       setTimeout(handleInitialSectionHighlight, 100);
     } else if (location.pathname.startsWith('/blog')) {
       setActiveTab('publications');
-    } else if (location.pathname.startsWith('/about')) {
-      setActiveTab('about');
     } else {
-      setActiveTab(path || 'home');
+      setActiveTab('home');
     }
   }, [location.pathname]);
 
-  // Smooth scroll to section when clicking on a hash link
+  // Smooth scroll to section - always navigate to homepage first if not already there
   const scrollToSection = (sectionId: string) => {
-    if (location.pathname !== '/') {
-      // Navigate to home page with hash
-      window.location.href = `/#${sectionId}`;
-      return;
-    }
-    
     setIsMenuOpen(false); // Close mobile menu
     
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop = element.offsetTop - 80; // Account for navbar height
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-      setActiveTab(sectionId); // Update active tab immediately
+    if (location.pathname !== '/') {
+      // Navigate to home page first, then scroll
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const offsetTop = element.offsetTop - 80; // Account for navbar height
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+          setActiveTab(sectionId);
+        }
+      }, 100);
+    } else {
+      // Already on homepage, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offsetTop = element.offsetTop - 80; // Account for navbar height
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+        setActiveTab(sectionId);
+      }
     }
   };
 
@@ -111,12 +119,12 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { id: "home", label: "Home", href: "/", isSection: false },
-    { id: "about", label: "About", href: "/about", isSection: false },
-    { id: "services", label: "Services", href: "#services", isSection: true },
-    { id: "products", label: "Products", href: "#products", isSection: true },
-    { id: "projects", label: "Projects", href: "#projects", isSection: true },
-    { id: "team", label: "Team", href: "#team", isSection: true },
+    { id: "home", label: "Home", isSection: true },
+    { id: "about", label: "About", isSection: true },
+    { id: "services", label: "Services", isSection: true },
+    { id: "products", label: "Products", isSection: true },
+    { id: "projects", label: "Projects", isSection: true },
+    { id: "team", label: "Team", isSection: true },
     { id: "publications", label: "Publications", href: "/blog", isSection: false },
     { id: "contact", label: "Contact", href: "/contact", isSection: false },
   ];
@@ -132,13 +140,13 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center" onClick={() => scrollToSection('home')}>
+            <button onClick={() => scrollToSection('home')} className="flex items-center">
               <img 
                 src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
                 alt="Casina Farms Logo" 
                 className="h-12 w-auto"
               />
-            </Link>
+            </button>
           </div>
 
           {/* Desktop Menu */}
@@ -167,7 +175,7 @@ const Navbar = () => {
                 return (
                   <Link 
                     key={item.id}
-                    to={item.href}
+                    to={item.href!}
                     className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
                       isActive ? "text-farm-green font-semibold" : ""
                     }`}
@@ -252,7 +260,7 @@ const Navbar = () => {
                   return (
                     <Link 
                       key={item.id}
-                      to={item.href}
+                      to={item.href!}
                       onClick={() => setIsMenuOpen(false)}
                       className={`text-farm-earth hover:text-farm-green font-medium ${
                         activeTab === item.id ? "text-farm-green font-semibold" : ""
