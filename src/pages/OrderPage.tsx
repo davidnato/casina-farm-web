@@ -167,7 +167,7 @@ const OrderPage = () => {
         customer_email: formData.email,
         customer_phone: formData.phone,
         delivery_address: formData.address,
-        order_items: selectedItems,
+        order_items: selectedItems as any, // Cast to Json type
         total_amount: getTotalAmount(),
         payment_method: formData.paymentMethod,
         till_number: formData.tillNumber || null,
