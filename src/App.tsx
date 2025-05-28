@@ -17,6 +17,7 @@ import OrderPage from "./pages/OrderPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import AuthPage from "./pages/AuthPage";
 import PaymentPage from "./pages/PaymentPage";
+import CreateAdminPage from "./pages/CreateAdminPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/create-admin" element={<CreateAdminPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
