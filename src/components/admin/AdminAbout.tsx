@@ -1,41 +1,100 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminAbout = () => {
   const { toast } = useToast();
-  const [story, setStory] = useState(
-    "Casina Farms is a pioneering social enterprise dedicated to integrating sustainable agriculture, coastal ecosystem restoration, and community development to build resilient coastal communities. Rooted in the Kenyan coast, Casina Farms emerged from the shared struggles of smallholder farmers and the urgent need to break the cycle of poverty and hunger. By empowering these farmers — the unsung stewards of the land — the enterprise promotes fair trade, climate-resilient agriculture, and biodiversity preservation."
-  );
-  const [storyPart2, setStoryPart2] = useState(
-    "The strong sense of community and connection to the natural landscape are defining features of coastal Kenya's culture. However, climate change, resource depletion, and economic marginalization have left many communities vulnerable. What if we could change this?"
-  );
-  const [mission, setMission] = useState(
-    "At Casina Farms, we're on a mission to restore ecosystems through sustainable practices, cultivating food security and economic prosperity for smallholder farmers in coastal Kenya, while fostering a flourishing natural environment."
-  );
-  const [vision, setVision] = useState(
-    "A thriving, regenerative food system that nourishes both people and the planet, fostering a future where prosperity, community, and nature flourish together."
-  );
+  const [story, setStory] = useState("");
+  const [storyPart2, setStoryPart2] = useState("");
+  const [mission, setMission] = useState("");
+  const [vision, setVision] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [contentId, setContentId] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchAboutContent();
+  }, []);
+
+  const fetchAboutContent = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('about_content')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching about content:', error);
+        return;
+      }
+
+      if (data) {
+        setContentId(data.id);
+        setStory(data.story_part_1);
+        setStoryPart2(data.story_part_2);
+        setMission(data.mission);
+        setVision(data.vision);
+        setImageUrl(data.image_url || "");
+      }
+    } catch (error) {
+      console.error('Error fetching about content:', error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // In a real application, this would make an API call to update data
-    setTimeout(() => {
+    try {
+      const updateData = {
+        story_part_1: story,
+        story_part_2: storyPart2,
+        mission,
+        vision,
+        image_url: imageUrl || null,
+        updated_at: new Date().toISOString(),
+      };
+
+      let result;
+      if (contentId) {
+        // Update existing content
+        result = await supabase
+          .from('about_content')
+          .update(updateData)
+          .eq('id', contentId);
+      } else {
+        // Insert new content
+        result = await supabase
+          .from('about_content')
+          .insert(updateData);
+      }
+
+      if (result.error) {
+        throw result.error;
+      }
+
       toast({
         title: "About section updated",
         description: "Your changes have been saved successfully",
       });
+    } catch (error) {
+      console.error('Error updating about content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update about section",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
