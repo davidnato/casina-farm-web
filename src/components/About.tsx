@@ -43,7 +43,7 @@ const About = () => {
           <div className="order-1 md:order-2 flex justify-center">
             <div className="relative h-80 w-full md:h-96 md:w-80 overflow-hidden rounded-lg shadow-xl">
               <img 
-                src="https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                src="/lovable-uploads/4.jpg" 
                 alt="Casina Farm landscape" 
                 className="w-full h-full object-cover"
               />
