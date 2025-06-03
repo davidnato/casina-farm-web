@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Lock, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -12,7 +12,7 @@ const Navbar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isAdmin, signOut, loading } = useAuth();
+  const { isAdmin, loading } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -113,11 +113,6 @@ const Navbar = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    setIsMenuOpen(false);
-  };
-
   const navItems = [
     { id: "home", label: "Home", isSection: true },
     { id: "about", label: "About", isSection: true },
@@ -193,39 +188,17 @@ const Navbar = () => {
               <Link to="/payment">Order Now</Link>
             </Button>
             
-            {!loading && (
-              <>
-                {user ? (
-                  <div className="flex items-center space-x-2">
-                    {isAdmin && (
-                      <Link to="/admin" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
-                        <Lock size={16} />
-                        <span className="sr-only md:not-sr-only">Admin</span>
-                      </Link>
-                    )}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleSignOut}
-                      className="text-farm-earth hover:text-farm-green"
-                    >
-                      <LogOut size={16} className="mr-1" />
-                      <span className="sr-only md:not-sr-only">Sign Out</span>
-                    </Button>
-                  </div>
-                ) : (
-                  <Link to="/auth" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
-                    <LogIn size={16} />
-                    <span className="sr-only md:not-sr-only">Sign In</span>
-                  </Link>
-                )}
-              </>
+            {!loading && isAdmin && (
+              <Link to="/admin" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
+                <Lock size={16} />
+                <span className="sr-only md:not-sr-only">Admin</span>
+              </Link>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            {!loading && user && isAdmin && (
+            {!loading && isAdmin && (
               <Link to="/admin" className="text-farm-earth mr-4 opacity-70">
                 <Lock size={18} />
               </Link>
@@ -274,30 +247,6 @@ const Navbar = () => {
               <Button asChild className="btn-primary w-full mt-2">
                 <Link to="/payment" onClick={() => setIsMenuOpen(false)}>Order Now</Link>
               </Button>
-              
-              {!loading && (
-                <>
-                  {user ? (
-                    <Button
-                      variant="ghost"
-                      onClick={handleSignOut}
-                      className="text-farm-earth hover:text-farm-green w-full justify-start"
-                    >
-                      <LogOut size={16} className="mr-2" />
-                      Sign Out
-                    </Button>
-                  ) : (
-                    <Link 
-                      to="/auth" 
-                      onClick={() => setIsMenuOpen(false)}
-                      className="text-farm-earth hover:text-farm-green font-medium flex items-center"
-                    >
-                      <LogIn size={16} className="mr-2" />
-                      Sign In
-                    </Link>
-                  )}
-                </>
-              )}
             </div>
           </div>
         )}
