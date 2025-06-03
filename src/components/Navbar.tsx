@@ -1,9 +1,11 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Lock } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import NavbarLogo from './navbar/NavbarLogo';
+import NavItems from './navbar/NavItems';
+import MobileMenu from './navbar/MobileMenu';
+import MobileMenuButton from './navbar/MobileMenuButton';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -133,123 +135,31 @@ const Navbar = () => {
     >
       <div className="farm-container">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <button onClick={() => scrollToSection('home')} className="flex items-center">
-              <img 
-                src="/lovable-uploads/0aa3d9cd-e3db-41e8-b1d7-23d27a56d0b9.png" 
-                alt="Casina Farms Logo" 
-                className="h-12 w-auto"
-              />
-            </button>
-          </div>
+          <NavbarLogo onLogoClick={() => scrollToSection('home')} />
+          
+          <NavItems 
+            navItems={navItems}
+            activeTab={activeTab}
+            scrollToSection={scrollToSection}
+            isAdmin={isAdmin}
+            loading={loading}
+          />
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => {
-              const isActive = activeTab === item.id;
-              
-              if (item.isSection) {
-                // For section links, use onClick to scroll
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
-                      isActive ? "text-farm-green font-semibold" : ""
-                    }`}
-                  >
-                    {item.label}
-                    {isActive && (
-                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
-                    )}
-                  </button>
-                );
-              } else {
-                // For regular page links, use Link component
-                return (
-                  <Link 
-                    key={item.id}
-                    to={item.href!}
-                    className={`text-farm-earth hover:text-farm-green font-medium transition-colors relative ${
-                      isActive ? "text-farm-green font-semibold" : ""
-                    }`}
-                  >
-                    {item.label}
-                    {isActive && (
-                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-farm-green rounded animate-fade-in"></span>
-                    )}
-                  </Link>
-                );
-              }
-            })}
-            
-            <Button asChild className="btn-primary">
-              <Link to="/payment">Order Now</Link>
-            </Button>
-            
-            {!loading && isAdmin && (
-              <Link to="/admin" className="text-farm-earth hover:text-farm-green inline-flex items-center gap-1 opacity-70 hover:opacity-100">
-                <Lock size={16} />
-                <span className="sr-only md:not-sr-only">Admin</span>
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            {!loading && isAdmin && (
-              <Link to="/admin" className="text-farm-earth mr-4 opacity-70">
-                <Lock size={18} />
-              </Link>
-            )}
-            <button
-              onClick={toggleMenu}
-              className="text-farm-earth focus:outline-none"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <MobileMenuButton 
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+            isAdmin={isAdmin}
+            loading={loading}
+          />
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4">
-            <div className="flex flex-col space-y-4">
-              {navItems.map((item) => {
-                if (item.isSection) {
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`text-farm-earth hover:text-farm-green font-medium text-left ${
-                        activeTab === item.id ? "text-farm-green font-semibold" : ""
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                } else {
-                  return (
-                    <Link 
-                      key={item.id}
-                      to={item.href!}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`text-farm-earth hover:text-farm-green font-medium ${
-                        activeTab === item.id ? "text-farm-green font-semibold" : ""
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
-              })}
-              <Button asChild className="btn-primary w-full mt-2">
-                <Link to="/payment" onClick={() => setIsMenuOpen(false)}>Order Now</Link>
-              </Button>
-            </div>
-          </div>
-        )}
+        <MobileMenu 
+          isMenuOpen={isMenuOpen}
+          navItems={navItems}
+          activeTab={activeTab}
+          scrollToSection={scrollToSection}
+          setIsMenuOpen={setIsMenuOpen}
+        />
       </div>
     </nav>
   );
