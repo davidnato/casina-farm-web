@@ -21,35 +21,25 @@ const Partner = ({ name, logo }: PartnerProps) => {
 const Partners = () => {
   const partners = [
     {
-      name: "Majoreni Beach MAnagement Unit",
-      logo: "/lovable-uploads/plogo1.jpg",
-      description: "We're proud to be a regular vendor at the Local Farmers Market."
-    },
-    {
-      name: "Organic Certification",
+      name: "GLFx Mombasa",
       logo: "/lovable-uploads/plogo2.jpg",
-      description: "Our farm is certified organic by the OCB."
+      description: "Partnering on agro-ecological initiatives in Jomvu and Mwawesa."
     },
     {
-      name: "Cifor",
-      logo: "/lovable-uploads/plogo3.jpg",
-      description: "Supporting local community farming initiatives."
-    },
-    {
-      name: "Majoreni Beach MAnagement Unit",
+      name: "Majoreni Beach Management Unit",
       logo: "/lovable-uploads/plogo1.jpg",
       description: "Working together to preserve coastal ecosystems."
+    },
+    {
+      name: "CIFOR-ICRAF",
+      logo: "/lovable-uploads/plogo3.jpg",
+      description: "Supporting local community farming initiatives."
     },
     {
       name: "Amani Jipange",
       logo: "/lovable-uploads/plogo2.jpg",
       description: "Partnering for education and research in sustainable farming."
     },
-    {
-      name: "Cifor",
-      logo: "/lovable-uploads/plogo3.jpg",
-      description: "Partnering for education and research in sustainable farming."
-    }
   ];
 
   const marqueeRef = useRef<HTMLDivElement>(null);
