@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Download, BookOpen, FileImage, PieChart } from "lucide-react";
+import { FileText, Download, BookOpen, FileImage, PieChart, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface ResourceProps {
@@ -44,6 +43,13 @@ const Resource = ({ title, description, icon, link, type }: ResourceProps) => {
 };
 
 const Resources = () => {
+  const featuredPublication = {
+    title: "Agro-Ecological Initiatives in Jomvu and Mwawesa",
+    description: "Explore our interactive story map showcasing Casina Farms' partnership with GLFx Mombasa to implement agro-ecological practices in coastal Kenya, building sustainable food systems for local communities.",
+    link: "https://arcg.is/1nrPfX0",
+    type: "Story Map"
+  };
+
   const resources = [
     {
       title: "Casina Farms Corporate Profile",
@@ -85,6 +91,37 @@ const Resources = () => {
             Access our collection of research papers, guides, reports, and marketing materials about sustainable agriculture and coastal ecosystem restoration.
           </p>
         </div>
+
+        {/* Featured Publication - Story Map */}
+        <Card className="mb-8 overflow-hidden border-2 border-farm-green/30 bg-gradient-to-r from-farm-cream to-farm-beige/50 hover:shadow-lg transition-all duration-300">
+          <CardContent className="p-6 md:p-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+              <div className="h-14 w-14 flex items-center justify-center bg-farm-green rounded-full shrink-0">
+                <MapPin className="text-white" size={28} />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold text-white bg-farm-green px-3 py-1 rounded-full">
+                    Featured Publication
+                  </span>
+                  <span className="text-xs text-farm-brown bg-farm-beige px-2 py-1 rounded">
+                    {featuredPublication.type}
+                  </span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-farm-earth mb-2">{featuredPublication.title}</h3>
+                <p className="text-gray-700 mb-4">{featuredPublication.description}</p>
+                <Button 
+                  className="bg-farm-green hover:bg-farm-green/90 text-white"
+                  asChild
+                >
+                  <a href={featuredPublication.link} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink size={16} className="mr-2" /> Explore Story Map
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {resources.map((resource, index) => (

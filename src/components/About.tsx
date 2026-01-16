@@ -28,6 +28,19 @@ const About = () => {
             <p className="text-gray-700 mb-4">
               The <strong className="font-bold">strong sense of community</strong> and <strong className="font-bold">connection to the natural landscape</strong> are defining features of coastal Kenya's culture. However, climate change, resource depletion, and economic marginalization have left many communities vulnerable. <strong className="font-bold">What if we could change this?</strong>
             </p>
+            <div className="bg-farm-beige/50 border-l-4 border-farm-green p-4 rounded-r-lg mb-4">
+              <p className="text-gray-700">
+                <strong className="font-bold text-farm-green">Partnership Highlight:</strong> Casina Farms has partnered with <strong>GLFx Mombasa</strong> to run agro-ecological initiatives in <strong>Jomvu and Mwawesa</strong>, advancing sustainable farming practices and community resilience.{" "}
+                <a 
+                  href="https://arcg.is/1nrPfX0" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-farm-green hover:text-farm-brown underline font-semibold"
+                >
+                  Explore our interactive story map →
+                </a>
+              </p>
+            </div>
             <div className="mt-8">
               <h3 className="text-2xl font-semibold text-farm-earth mb-4">Our Mission</h3>
               <p className="text-gray-700 mb-4">
