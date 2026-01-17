@@ -62,6 +62,9 @@ const Footer = () => {
               <li>
                 <Link to="/blog" className="hover:text-farm-beige transition-colors">Blog</Link>
               </li>
+              <li>
+                <Link to="https://arcg.is/1nrPfX0" className="hover:text-farm-beige transition-colors">Waves Roots</Link>
+              </li>
             </ul>
           </div>
           
