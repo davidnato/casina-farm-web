@@ -69,7 +69,7 @@ const Publications = () => {
     <section id="publications" className="section-padding bg-farm-cream/50">
       <div className="farm-container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Publications</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Publications and Story Maps</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-gray-700">
             Explore our research papers, articles, and insights about sustainable farming and ecosystem restoration.
