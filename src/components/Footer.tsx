@@ -86,7 +86,7 @@ const Footer = () => {
               </li>
             </ul>
             <div className="flex space-x-3 mt-4">
-              <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/casinafarms" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <Facebook size={18} />
               </a>
               <a href="https://www.instagram.com/casinafarms?igsh=MWE2ZzIzcjhzZjVxeQ==" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
@@ -94,6 +94,8 @@ const Footer = () => {
               </a>
               <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                 <Twitter size={18} />
+              <a href="https://www.linkedin.com/company/casinafarms" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                <Linkein size={18} />
               </a>
             </div>
           </div>
