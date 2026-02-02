@@ -1,5 +1,5 @@
 
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { toast } from "sonner";
@@ -94,8 +94,9 @@ const Footer = () => {
               </a>
               <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                 <Twitter size={18} />
-              <a href="https://www.linkedin.com/company/casinafarms" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                <Linkein size={18} />
+              </a>
+              <a href="https://www.linkedin.com/company/casinafarms" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                <Linkedin size={18} />
               </a>
             </div>
           </div>
