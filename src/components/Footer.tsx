@@ -89,7 +89,7 @@ const Footer = () => {
               <a href="https://www.facebook.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <Facebook size={18} />
               </a>
-              <a href="https://www.instagram.com/casinafarms/" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/casinafarms?igsh=MWE2ZzIzcjhzZjVxeQ==" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <Instagram size={18} />
               </a>
               <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
