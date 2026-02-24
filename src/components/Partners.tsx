@@ -46,7 +46,7 @@ const Partners = () => {
       description: "Partnering for education and research in sustainable farming."
     },
     {
-      name: "Ceriops",
+      name: "Ceriops Environmental Organization",
       logo: "/lovable-uploads/ceriops.png",
       description: "Partnering for education and research in sustainable farming."
     },
@@ -56,12 +56,12 @@ const Partners = () => {
       description: "Partnering for education and research in sustainable farming."
     },
     {
-      name: "Mwachideco",
+      name: "Mwachideco C.B.O",
       logo: "/lovable-uploads/mwachideco.jpeg",
       description: "Partnering for education and research in sustainable farming."
     },
     {
-      name: "Zurich",
+      name: "Zurich Foundation",
       logo: "/lovable-uploads/zurich.png",
       description: "Partnering for education and research in sustainable farming."
     },
