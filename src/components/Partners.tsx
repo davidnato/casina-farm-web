@@ -42,7 +42,7 @@ const Partners = () => {
     },
     {
       name: "Bidii Creek Conservancy",
-      logo: "/lovable-uploads/bidii-creek.jpg",
+      logo: "/lovable-uploads/bidii-creek.jpeg",
       description: "Partnering for education and research in sustainable farming."
     },
     {
@@ -57,7 +57,7 @@ const Partners = () => {
     },
     {
       name: "Mwachideco",
-      logo: "/lovable-uploads/mwachideco.jpg",
+      logo: "/lovable-uploads/mwachideco.jpeg",
       description: "Partnering for education and research in sustainable farming."
     },
     {
