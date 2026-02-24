@@ -40,6 +40,32 @@ const Partners = () => {
       logo: "/lovable-uploads/plogo2.jpg",
       description: "Partnering for education and research in sustainable farming."
     },
+    {
+      name: "Bidii Creek Conservancy",
+      logo: "/lovable-uploads/bidii-creek.jpg",
+      description: "Partnering for education and research in sustainable farming."
+    },
+    {
+      name: "Ceriops",
+      logo: "/lovable-uploads/ceriops.png",
+      description: "Partnering for education and research in sustainable farming."
+    },
+    {
+      name: "Kenya Forest Service",
+      logo: "/lovable-uploads/kenya-forest.png",
+      description: "Partnering for education and research in sustainable farming."
+    },
+    {
+      name: "Mwachideco",
+      logo: "/lovable-uploads/mwachideco.jpg",
+      description: "Partnering for education and research in sustainable farming."
+    },
+    {
+      name: "Zurich",
+      logo: "/lovable-uploads/zurich.png",
+      description: "Partnering for education and research in sustainable farming."
+    },
+    
   ];
 
   const marqueeRef = useRef<HTMLDivElement>(null);
