@@ -22,7 +22,7 @@ const Partners = () => {
   const partners = [
     {
       name: "GLFx Mombasa",
-      logo: "/lovable-uploads/plogo2.jpg",
+      logo: "/lovable-uploads/glfx.png",
       description: "Partnering on agro-ecological initiatives in Jomvu and Mwawesa."
     },
     {
