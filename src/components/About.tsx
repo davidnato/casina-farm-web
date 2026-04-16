@@ -15,15 +15,15 @@ const About = () => {
     <section id="about" className="section-padding bg-white">
       <div className="farm-container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Our Story</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">About Us</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="order-2 md:order-1">
-            <h3 className="text-2xl font-semibold text-farm-earth mb-4">Our Story</h3>
+            <h3 className="text-2xl font-semibold text-farm-earth mb-4">About Us</h3>
             <p className="text-gray-700 mb-4">
-              Casina Farms is a pioneering social enterprise dedicated to integrating sustainable agriculture, coastal ecosystem restoration, and community development to build resilient coastal communities. Rooted in the <strong className="font-bold">Kenyan coast</strong>, Casina Farms emerged from the shared struggles of smallholder farmers and the urgent need to break the cycle of poverty and hunger. By empowering these farmers — the unsung stewards of the land — the enterprise promotes fair trade, climate-resilient agriculture, and biodiversity preservation.
+              Casina Farms is a pioneering social enterprise dedicated to integrating sustainable agriculture, coastal ecosystem restoration, and community development to build resilient coastal communities. Rooted in the <strong className="font-bold">Kenyan coast</strong>, Casina Farms emerged from the shared struggles of smallholder farmers and the urgent need to break the cycle of poverty and hunger. By empowering these farmers, the unsung stewards of the land, the enterprise promotes fair trade, climate-resilient agriculture, and biodiversity preservation.
             </p>
             <p className="text-gray-700 mb-4">
               The <strong className="font-bold">strong sense of community</strong> and <strong className="font-bold">connection to the natural landscape</strong> are defining features of coastal Kenya's culture. However, climate change, resource depletion, and economic marginalization have left many communities vulnerable. <strong className="font-bold">What if we could change this?</strong>
@@ -39,6 +39,11 @@ const About = () => {
                 >
                   Explore our interactive story map →
                 </a>
+              </p>
+            </div>
+            <div className="bg-farm-beige/50 border-l-4 border-farm-brown p-4 rounded-r-lg mb-4">
+              <p className="text-gray-700">
+                <strong className="font-bold text-farm-brown">Flagship Initiative:</strong> <strong>Waves Root</strong> is Casina Farms' flagship initiative focused on regenerating oceans with people and science, driving coastal ecosystem restoration and marine biodiversity conservation.
               </p>
             </div>
             <div className="mt-8">

@@ -11,12 +11,24 @@ const Gallery = () => {
       alt: "Farm landscape"
     },
     {
+      src: "/lovable-uploads/team-farm.png",
+      alt: "Casina Farms team in the field"
+    },
+    {
+      src: "/lovable-uploads/farmer-training.png",
+      alt: "Farmer training session"
+    },
+    {
+      src: "/lovable-uploads/classroom-training.png",
+      alt: "Community classroom training"
+    },
+    {
       src: "/lovable-uploads/5.jpg",
-      alt: "Farm animals"
+      alt: "Farm activities"
     },
     {
       src: "/lovable-uploads/4.jpg",
-      alt: "Fresh vegetables"
+      alt: "Casina Farms"
     },
     {
       src: "/lovable-uploads/6.jpg",
@@ -26,21 +38,15 @@ const Gallery = () => {
       src: "/lovable-uploads/7.jpg",
       alt: "Organic farming"
     },
-    {
-      src: "/lovable-uploads/1.jpg",
-      alt: "Farm produce"
-    }
   ];
   
   const openModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
-    // Prevent body scrolling when modal is open
     document.body.style.overflow = 'hidden';
   };
   
   const closeModal = () => {
     setSelectedImage(null);
-    // Re-enable body scrolling
     document.body.style.overflow = 'auto';
   };
 
@@ -51,7 +57,7 @@ const Gallery = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-farm-green mb-4">Our Gallery</h2>
           <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
           <p className="max-w-2xl mx-auto text-gray-700">
-            Take a visual tour of our farm, from the fields to the barn, and see where your food comes from.
+            Take a visual tour of our farm, community trainings, and field activities.
           </p>
         </div>
         
