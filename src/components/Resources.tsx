@@ -104,6 +104,7 @@ const Resources = () => {
         {/* Story Maps Section */}
         <div className="mb-8 space-y-4">
           <h3 className="text-xl font-semibold text-farm-earth mb-4">Story Maps & Publications</h3>
+
           {storyMaps.map((storyMap, index) => (
             <Card key={index} className="overflow-hidden border-2 border-farm-green/30 bg-gradient-to-r from-farm-cream to-farm-beige/50 hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6 md:p-8">

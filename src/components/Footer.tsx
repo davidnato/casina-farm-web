@@ -5,6 +5,12 @@ import { Link } from 'react-router-dom';
 import { toast } from "sonner";
 import { useState } from 'react';
 
+const TikTokIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.88-2.88 2.89 2.89 0 0 1 2.88-2.88c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.87a8.16 8.16 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.3z"/>
+  </svg>
+);
+
 const Footer = () => {
   const [email, setEmail] = useState("");
 
@@ -45,7 +51,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/about" className="hover:text-farm-beige transition-colors">Our Story</Link>
+                <Link to="/about" className="hover:text-farm-beige transition-colors">About Us</Link>
               </li>
               <li>
                 <Link to="/projects" className="hover:text-farm-beige transition-colors">Projects</Link>
@@ -63,7 +69,7 @@ const Footer = () => {
                 <Link to="/blog" className="hover:text-farm-beige transition-colors">Blog</Link>
               </li>
               <li>
-                <Link to="https://arcg.is/1nrPfX0" className="hover:text-farm-beige transition-colors">Waves Roots</Link>
+                <a href="https://arcg.is/1nrPfX0" target="_blank" rel="noopener noreferrer" className="hover:text-farm-beige transition-colors">Waves Root</a>
               </li>
             </ul>
           </div>
@@ -92,8 +98,8 @@ const Footer = () => {
               <a href="https://www.instagram.com/casinafarms?igsh=MWE2ZzIzcjhzZjVxeQ==" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <Instagram size={18} />
               </a>
-              <a href="https://chat.whatsapp.com/FmjWWJQDGie1qrAlOiK9dH" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                <Twitter size={18} />
+              <a href="https://www.tiktok.com/@casinafarm?r=1&t=ZS-959LO9DWD" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                <TikTokIcon size={18} />
               </a>
               <a href="https://www.linkedin.com/company/casinafarms" className="bg-white/10 hover:bg-white/30 p-2 rounded-full transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                 <Linkedin size={18} />
