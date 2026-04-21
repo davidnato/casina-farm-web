@@ -15,6 +15,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import BlogPage from "./pages/BlogPage";
 import OrderPage from "./pages/OrderPage";
 import ResourcesPage from "./pages/ResourcesPage";
+import StoryMapsPage from "./pages/StoryMapsPage";
 import AuthPage from "./pages/AuthPage";
 import PaymentPage from "./pages/PaymentPage";
 import CreateAdminPage from "./pages/CreateAdminPage";
@@ -38,6 +39,8 @@ const App = () => (
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/order" element={<OrderPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/story-maps" element={<StoryMapsPage />} />
+            <Route path="/stories" element={<StoryMapsPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
