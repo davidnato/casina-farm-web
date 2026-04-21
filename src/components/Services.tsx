@@ -129,7 +129,7 @@ const Services = () => {
           </div>
           <div className="mt-6 text-center">
             <p className="text-lg font-medium text-farm-earth">
-              Casina Farms stands at the intersection of ecological restoration, community empowerment, and sustainable innovation—shaping a greener, more resilient future.
+              Casina Farms stands at the intersection of ecological restoration, community empowerment, and sustainable innovation shaping a greener, more resilient future.
             </p>
           </div>
         </div>
