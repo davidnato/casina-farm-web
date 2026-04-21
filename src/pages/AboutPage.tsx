@@ -1,7 +1,6 @@
 
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
-import Team from "@/components/Team";
 import Footer from "@/components/Footer";
 
 const AboutPage = () => {
@@ -10,7 +9,6 @@ const AboutPage = () => {
       <Navbar />
       <div className="pt-16 pb-8">
         <About />
-        <Team />
       </div>
       <Footer />
     </div>

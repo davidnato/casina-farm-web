@@ -121,7 +121,7 @@ const Navbar = () => {
     { id: "services", label: "Services", isSection: true },
     { id: "products", label: "Products", isSection: true },
     { id: "projects", label: "Projects", isSection: true },
-    { id: "team", label: "Team", isSection: true },
+    
     { id: "publications", label: "Publications and Story Maps", href: "/blog", isSection: false },
     { id: "contact", label: "Contact", href: "/contact", isSection: false },
   ];
