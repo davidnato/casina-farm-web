@@ -15,6 +15,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import BlogPage from "./pages/BlogPage";
 import OrderPage from "./pages/OrderPage";
 import ResourcesPage from "./pages/ResourcesPage";
+import StoryMapsPage from "./pages/StoryMapsPage";
 import AuthPage from "./pages/AuthPage";
 import PaymentPage from "./pages/PaymentPage";
 import CreateAdminPage from "./pages/CreateAdminPage";
