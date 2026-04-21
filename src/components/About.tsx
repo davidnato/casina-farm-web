@@ -1,14 +1,5 @@
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -31,14 +22,12 @@ const About = () => {
             <div className="bg-farm-beige/50 border-l-4 border-farm-green p-4 rounded-r-lg mb-4">
               <p className="text-gray-700">
                 <strong className="font-bold text-farm-green">Partnership Highlight:</strong> Casina Farms has partnered with <strong>GLFx Mombasa</strong> to run agro-ecological initiatives in <strong>Jomvu and Mwawesa</strong>, advancing sustainable farming practices and community resilience.{" "}
-                <a 
-                  href="https://arcg.is/1nrPfX0" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <Link
+                  to="/story-maps"
                   className="text-farm-green hover:text-farm-brown underline font-semibold"
                 >
                   Explore our interactive story map →
-                </a>
+                </Link>
               </p>
             </div>
             <div className="bg-farm-beige/50 border-l-4 border-farm-brown p-4 rounded-r-lg mb-4">
