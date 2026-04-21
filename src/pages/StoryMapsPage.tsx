@@ -1,48 +1,37 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MapPin, ExternalLink, Leaf, Users, Sprout } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface StoryMap {
   title: string;
-  description: string;
-  highlights: string[];
+  date?: string;
+  summary: string;
+  body: string[];
   link: string;
-  embedUrl: string;
-  type: string;
-  featured?: boolean;
 }
 
 const storyMaps: StoryMap[] = [
   {
     title: "Agro-Ecological Initiatives in Jomvu and Mwawesa",
-    description:
-      "An interactive story map showcasing Casina Farms' partnership with GLFx Mombasa to implement agro-ecological practices in coastal Kenya. Discover how we are building sustainable food systems alongside local communities in Jomvu and Mwawesa.",
-    highlights: [
-      "Partnership with GLFx Mombasa",
-      "Community-led agro-ecology in Jomvu & Mwawesa",
-      "Restoration of coastal food systems",
+    date: "2025",
+    summary:
+      "Casina Farms has partnered with GLFx Mombasa to run agro-ecological initiatives in Jomvu and Mwawesa, building sustainable food systems with coastal communities in Kenya.",
+    body: [
+      "This story documents the joint work between Casina Farms and GLFx Mombasa to introduce agro-ecological practices in two coastal communities, Jomvu and Mwawesa. The work focuses on soil regeneration, water conservation, agroforestry, and crop diversification, alongside training that puts farmers at the centre of decision making.",
+      "The initiative also strengthens local seed systems, encourages indigenous crop varieties, and connects farmers to markets so that ecological gains translate into improved livelihoods. Through community dialogues, demonstration plots, and farmer-to-farmer exchanges, the programme is building a model of sustainable agriculture that other coastal villages can adapt.",
+      "Read the full interactive story to see maps, photos, and field updates from the ground.",
     ],
     link: "https://arcg.is/1nrPfX0",
-    embedUrl: "https://arcg.is/1nrPfX0",
-    type: "Featured Story Map",
-    featured: true,
   },
   {
     title: "Casina Farms Story Map",
-    description:
-      "A comprehensive journey through Casina Farms' sustainable farming initiatives, mangrove conservation efforts, and community partnerships across coastal Kenya.",
-    highlights: [
-      "Sustainable farming practices",
-      "Mangrove and ecosystem restoration",
-      "Farmer training programs",
+    summary:
+      "A broader look at Casina Farms’ journey, sustainable farming initiatives, mangrove restoration work, and community partnerships across coastal Kenya.",
+    body: [
+      "This story map traces our work from the early days of Casina Farms through our flagship initiatives, including Waves Root and the Casina Farm Mkulima programme. It highlights how regenerative practices, training, and partnerships are shaping a healthier coastal ecosystem.",
+      "It also captures the people behind the work, our farmers, trainers, and partners, and the landscapes we are helping to restore, from farmland to mangroves.",
     ],
     link: "https://storymaps.arcgis.com/stories/3c439b0ed1354893960d9c8c9c924d24",
-    embedUrl:
-      "https://storymaps.arcgis.com/stories/3c439b0ed1354893960d9c8c9c924d24",
-    type: "Story Map",
   },
 ];
 
@@ -51,124 +40,64 @@ const StoryMapsPage = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-farm-green/10 via-farm-beige to-farm-cream py-16 md:py-24">
-        <div className="farm-container text-center">
-          <div className="inline-flex items-center gap-2 bg-farm-green/10 text-farm-green px-4 py-2 rounded-full mb-4">
-            <MapPin size={18} />
-            <span className="text-sm font-semibold">Our Stories</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-farm-earth mb-4">
+      <main className="flex-1 farm-container py-12 md:py-16">
+        <header className="mb-10 max-w-3xl">
+          <h1 className="text-3xl md:text-4xl font-bold text-farm-green mb-3">
             Story Maps & Publications
           </h1>
-          <div className="w-24 h-1 bg-farm-brown mx-auto mb-6"></div>
-          <p className="max-w-3xl mx-auto text-gray-700 text-lg">
-            Explore interactive story maps documenting our agro-ecological
-            initiatives, partnerships, and impact across coastal Kenya.
+          <div className="w-20 h-1 bg-farm-brown mb-5"></div>
+          <p className="text-gray-700 leading-relaxed">
+            Our story maps document Casina Farms’ work in agro-ecology,
+            mangrove restoration, and community partnerships. Each entry below
+            includes a short summary and a link to the full interactive story.
           </p>
-        </div>
-      </section>
+        </header>
 
-      {/* Story Maps */}
-      <section className="section-padding">
-        <div className="farm-container space-y-16">
-          {storyMaps.map((sm, index) => (
-            <article key={index} className="space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                  <span
-                    className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 ${
-                      sm.featured
-                        ? "bg-farm-green text-white"
-                        : "bg-farm-beige text-farm-brown"
-                    }`}
-                  >
-                    {sm.type}
-                  </span>
-                  <h2 className="text-2xl md:text-3xl font-bold text-farm-earth">
-                    {sm.title}
-                  </h2>
-                </div>
-                <Button asChild className="btn-primary">
-                  <a href={sm.link} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink size={16} className="mr-2" /> Open Story Map
-                  </a>
-                </Button>
+        <div className="space-y-12 max-w-3xl">
+          {storyMaps.map((sm, i) => (
+            <article key={i} className="border-b border-farm-beige pb-10 last:border-0">
+              <h2 className="text-2xl font-semibold text-farm-earth mb-1">
+                {sm.title}
+              </h2>
+              {sm.date && (
+                <p className="text-sm text-farm-green font-medium mb-3">
+                  {sm.date}
+                </p>
+              )}
+              <p className="text-gray-800 font-medium mb-4">{sm.summary}</p>
+              <div className="space-y-3 text-gray-700 leading-relaxed">
+                {sm.body.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
               </div>
-
-              <p className="text-gray-700 text-lg leading-relaxed">
-                {sm.description}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {sm.highlights.map((h, i) => {
-                  const icons = [Leaf, Users, Sprout];
-                  const Icon = icons[i % icons.length];
-                  return (
-                    <Card
-                      key={i}
-                      className="border-farm-green/20 bg-farm-cream/40"
-                    >
-                      <CardContent className="p-4 flex items-start gap-3">
-                        <div className="h-9 w-9 flex items-center justify-center bg-farm-green/10 rounded-full shrink-0">
-                          <Icon className="text-farm-green" size={18} />
-                        </div>
-                        <p className="text-sm text-farm-earth font-medium">
-                          {h}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-
-              {/* Embedded preview */}
-              <div className="rounded-lg overflow-hidden border-2 border-farm-green/20 shadow-lg bg-white">
-                <iframe
-                  src={sm.embedUrl}
-                  title={sm.title}
-                  className="w-full h-[500px] md:h-[600px]"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="text-center">
+              <p className="mt-5">
                 <a
                   href={sm.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-farm-green hover:text-farm-brown transition-colors font-medium"
+                  className="text-farm-green hover:text-farm-brown underline font-medium break-all"
                 >
-                  <ExternalLink size={16} className="mr-2" />
-                  View full story map in new tab
+                  {sm.link}
                 </a>
-              </div>
+              </p>
             </article>
           ))}
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="bg-farm-green/5 py-12">
-        <div className="farm-container text-center">
-          <h3 className="text-2xl font-bold text-farm-earth mb-3">
-            Want to learn more about our work?
-          </h3>
-          <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-            Get in touch to explore partnership opportunities or read our
-            latest publications.
+        <div className="mt-12 max-w-3xl text-gray-700">
+          <p>
+            For more publications and updates, visit our{" "}
+            <Link to="/blog" className="text-farm-green underline hover:text-farm-brown">
+              Publications page
+            </Link>{" "}
+            or{" "}
+            <Link to="/contact" className="text-farm-green underline hover:text-farm-brown">
+              get in touch
+            </Link>
+            .
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild className="btn-primary">
-              <Link to="/contact">Contact Us</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link to="/blog">Browse Publications</Link>
-            </Button>
-          </div>
         </div>
-      </section>
+      </main>
 
       <Footer />
     </div>
