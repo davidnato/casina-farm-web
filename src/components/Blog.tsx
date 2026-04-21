@@ -106,8 +106,11 @@ const Publications = () => {
           )}
         </div>
 
-        <div className="text-center mt-10">
-          <Button asChild className="btn-secondary">
+        <div className="text-center mt-10 flex flex-wrap justify-center gap-3">
+          <Button asChild className="btn-primary">
+            <Link to="/story-maps">Explore Story Maps</Link>
+          </Button>
+          <Button asChild variant="outline" className="btn-secondary">
             <Link to="/blog">View All Publications</Link>
           </Button>
         </div>
