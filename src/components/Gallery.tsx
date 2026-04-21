@@ -38,6 +38,14 @@ const Gallery = () => {
       src: "/lovable-uploads/7.jpg",
       alt: "Organic farming"
     },
+    {
+      src: "/lovable-uploads/community-training-1.jpg",
+      alt: "Community agro-ecology training session in Jomvu"
+    },
+    {
+      src: "/lovable-uploads/community-training-2.jpg",
+      alt: "Farmers gathering for field training in Mwawesa"
+    },
   ];
   
   const openModal = (imageSrc: string) => {
