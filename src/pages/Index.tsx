@@ -4,7 +4,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Products from "@/components/Products";
 import Gallery from "@/components/Gallery";
-import Team from "@/components/Team";
+
 import Partners from "@/components/Partners";
 import Projects from "@/components/Projects";
 import Publications from "@/components/Blog";
