@@ -125,15 +125,13 @@ const Resources = () => {
                     </div>
                     <h3 className="text-xl md:text-2xl font-bold text-farm-earth mb-2">{storyMap.title}</h3>
                     <p className="text-gray-700 mb-4">{storyMap.description}</p>
-                    <a 
-                      href={storyMap.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    <Link
+                      to="/story-maps"
                       className="inline-flex items-center text-farm-green hover:text-farm-brown transition-colors font-medium"
                     >
-                      <ExternalLink size={16} className="mr-2" /> 
+                      <ExternalLink size={16} className="mr-2" />
                       {storyMap.displayLink || "Explore Story Map"}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </CardContent>
