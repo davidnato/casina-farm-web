@@ -6,19 +6,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const ServiceCard = ({ 
   title, 
   description, 
-  icon 
+  icon,
+  index = 0,
 }: { 
   title: string; 
   description: string; 
-  icon: React.ReactNode 
+  icon: React.ReactNode;
+  index?: number;
 }) => {
   return (
-    <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+    <Card
+      className="group overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in opacity-0"
+      style={{ animationDelay: `${index * 120}ms`, animationFillMode: "forwards" }}
+    >
       <CardContent className="p-6">
-        <div className="w-16 h-16 bg-farm-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-farm-green/10 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:bg-farm-green/20">
           {icon}
         </div>
-        <h3 className="text-xl font-semibold text-farm-earth mb-3 text-center">{title}</h3>
+        <h3 className="text-xl font-semibold text-farm-earth mb-3 text-center transition-colors duration-300 group-hover:text-farm-green">{title}</h3>
         <p className="text-gray-700 text-center">{description}</p>
       </CardContent>
     </Card>
