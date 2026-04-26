@@ -97,6 +97,7 @@ const Services = () => {
                   title={service.title}
                   description={service.description}
                   icon={service.icon}
+                  index={index}
                 />
               ))}
             </div>
