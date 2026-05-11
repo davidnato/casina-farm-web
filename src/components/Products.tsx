@@ -37,9 +37,9 @@ const Products = () => {
   const products = [
     {
       name: "Mangrove Honey",
-      description: "Premium honey from mangrove ecosystems. Available in 380g (Ksh. 500), 660g (Ksh. 1000), and 1kg (Ksh. 1500).",
+      description: "Premium honey from mangrove ecosystems. Available in 70g (Ksh 150  250g (Ksh. 400), 500g (Ksh. 800), and 1kg (Ksh. 1500).",
       image: "https://casinafarms.wordpress.com/wp-content/uploads/2024/07/18.png",
-      price: "From Ksh. 500",
+      price: "From Ksh. 150",
       category: "Honey"
     },
     {
